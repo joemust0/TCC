@@ -10,6 +10,7 @@ import { MainComponent } from './Front/main/main.component';
 import { TestesComponent } from './Dev/testes/testes.component';
 import { LancamentosComponent } from './Front/Ferramenta/lancamentos/lancamentos.component';
 import { BalancosComponent } from './Front/Ferramenta/balancos/balancos.component';
+import { MotorCalcComponent } from './Front/Ferramenta/motor-calc/motor-calc.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { BalancosComponent } from './Front/Ferramenta/balancos/balancos.componen
     MainComponent,
     TestesComponent,
     LancamentosComponent,
-    BalancosComponent
+    BalancosComponent,
+    MotorCalcComponent
   ],
   imports: [
     BrowserModule,
