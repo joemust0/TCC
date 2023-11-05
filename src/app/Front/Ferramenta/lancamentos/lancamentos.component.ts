@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild} from '@angular/core';
 
 
 @Component({
@@ -8,6 +8,11 @@ import { Component } from '@angular/core';
 })
 
 export class LancamentosComponent {
+
+  @ViewChild('btnNovo') oc!: ElementRef;
+  @ViewChild('criarBalanco') ap!: ElementRef;
+
+constructor() {}
 
   newBalanco() {
 
@@ -19,7 +24,11 @@ export class LancamentosComponent {
 
   document.writeln("Nome: " + name);
   document.writeln("Descrição: " + description);
+    }
 
+    nBalanco(){
+   this.oc.nativeElement.classList.add('ocultar')
+   this.ap.nativeElement.classList.remove('ocultar')
 
     }
 
