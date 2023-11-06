@@ -9,6 +9,8 @@ import { CalcExt } from './CalcExt';
 export class MotorCalcComponent {
 private calc: CalcExt;
 resultados: number [] = [];
+fristV: number =0;
+lastV: number =0;
 
 constructor() {
 this.calc = new CalcExt();
@@ -17,16 +19,16 @@ this.calc = new CalcExt();
 executarCalculos(){
 this.resultados =[];
 
-this.calc.calculate(1, "+", 2);
+this.calc.calculate(this.fristV, "+", this.lastV);
 this.resultados.push(this.calc.showValue());
 
-this.calc.calculate(10, "-", 5);
+this.calc.calculate(this.fristV, "-", this.lastV);
 this.resultados.push(this.calc.showValue());
 
-this.calc.calculate(2, "*", 5);
+this.calc.calculate(this.fristV, "*", this.lastV);
 this.resultados.push(this.calc.showValue());
 
-this.calc.calculate(10, "/", 5);
+this.calc.calculate(this.fristV, "/", this.lastV);
 this.resultados.push(this.calc.showValue());
 }
 
