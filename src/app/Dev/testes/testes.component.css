@@ -1,0 +1,15 @@
+<div>
+  <app-lancamentos
+    (lancamentoAdicionado)="adicionarLancamento($event)"
+    [lancamentos]="lancamentos"
+  ></app-lancamentos>
+
+  <app-info-lancamento
+    [lancamentos]="lancamentos"
+    [tipoLancamento]="tipoLancamento"
+  ></app-info-lancamento>
+
+  <app-balanco-patrimonial
+    [lancamentos]="lancamentos"
+  ></app-balanco-patrimonial>
+</div>

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-info-lancamento',
@@ -6,5 +6,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./info-lancamento.component.css']
 })
 export class InfoLancamentoComponent {
-
+  @Input() lancamentos: any[] = [];
+  @Input() columnsToShow: string[] = [];
 }

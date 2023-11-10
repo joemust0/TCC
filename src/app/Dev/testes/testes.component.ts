@@ -6,5 +6,10 @@ import { Component } from '@angular/core';
   styleUrls: ['./testes.component.css']
 })
 export class TestesComponent {
+  lancamentos: any[] = [];
+  tipoLancamento: string = '';
 
+  adicionarLancamento(novoLancamento: any) {
+    this.lancamentos.push(novoLancamento);
+  }
 }
