@@ -1,6 +1,8 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit,  ElementRef, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
+import { EventEmitter, Output } from '@angular/core';
+
 
 @Component({
   selector: 'app-lancamentos',
@@ -19,8 +21,11 @@ export class LancamentosComponent implements OnInit {
   contrapartidaConta: string = '';
   contrapartidaValor: number = 0;
   camposDinamicos: any[] = [];
+
   @Input() columnsToShow: string[] = [];
   @Input() lancamentos: any[] = [];
+  @Output() mostrarBalancoChange: EventEmitter<boolean> = new EventEmitter<boolean>();
+  mostrarBalanco: boolean = false;
 
   constructor(private router: Router, private route: ActivatedRoute) {}
 
@@ -40,12 +45,8 @@ export class LancamentosComponent implements OnInit {
   }
 
   gerarBalanco() {
-    // Implemente a lógica para gerar o balanço aqui
-    this.redirectToHome();
-  }
-
-  redirectToHome() {
-    this.router.navigate(['/balanco']);
+    this.mostrarBalanco = true;
+    this.mostrarBalancoChange.emit(this.mostrarBalanco);
   }
 
   adicionarCampo() {

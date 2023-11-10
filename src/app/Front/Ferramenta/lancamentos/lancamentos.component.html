@@ -47,11 +47,11 @@
     <input type="checkbox" id="nCampoFuncao{{ i }}" [(ngModel)]="campo.funcaoCredito">
     <label for="nCampoFuncao{{ i }}">Crédito</label>
   </div>
-
+  <button (click)="adicionarCampo()">Adicionar Campo</button>
   <button (click)="adicionarLancamento()">Gravar Lançamento</button>
   <button (click)="limparCampos()">Limpar Campos</button>
 
-  <button (click)="adicionarCampo()">Adicionar Campo</button>
+  <button (click)="gerarBalanco()">Gerar Balanço</button>
 </div>
 
 <table>
@@ -89,3 +89,7 @@
       </ng-container>
     </tr>
 </table>
+<div *ngIf="mostrarBalanco">
+  <app-lancamentos></app-lancamentos>
+</div>
+

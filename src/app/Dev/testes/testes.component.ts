@@ -8,9 +8,10 @@ import { Component, Input } from '@angular/core';
 export class TestesComponent {
   @Input() lancamentos: any[] = [];
   @Input() tipoLancamento: string = '';
+  mostrarBalanco: boolean = false; 
+
 
   adicionarLancamento(novoLancamento: any) {
     this.lancamentos.push(novoLancamento);
   }
-
 }

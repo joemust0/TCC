@@ -1,12 +1,13 @@
-import { Component, ElementRef, ViewChild, Input, Output, EventEmitter } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, ElementRef, ViewChild, Input, AfterViewInit } from '@angular/core';
+import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-balancos',
   templateUrl: './balancos.component.html',
   styleUrls: ['./balancos.component.css']
 })
-export class BalancosComponent {
+export class BalancosComponent implements AfterViewInit {
 
   @Input() lancamentosAtivoCirculante: any[] = [];
   @Input() lancamentosAtivoNCirculante: any[] = [];
@@ -23,7 +24,27 @@ export class BalancosComponent {
   @ViewChild('tabelaB') tabelaB!: ElementRef;
 
   // Adicione o serviço de roteamento no construtor
-  constructor(private router: Router) {}
+  constructor(private router: Router, private route:ActivatedRoute) {
+    this.router.events
+    .pipe(filter(event => event instanceof NavigationEnd))
+    .subscribe(() => {
+      this.atualizarVisibilidade();
+    });
+}
+
+private atualizarVisibilidade() {
+  if (this.oc && this.ap && this.tabelaB) {
+    const urlAtual = this.router.url;
+
+    if (urlAtual === '/balanço') {
+      this.oc.nativeElement.classList.add('ocultar');
+      this.ap.nativeElement.classList.add('ocultar');
+      this.tabelaB.nativeElement.classList.remove('ocultar');
+    } else {
+
+    }
+  }
+}
 
   newBalanco() {
     console.log("Nome: " + this.nome);
@@ -44,13 +65,16 @@ export class BalancosComponent {
   }
 
   gerarBalanco() {
-    if (this.oc && this.ap) {
+    if (this.oc && this.ap && this.tabelaB) {
       this.oc.nativeElement.classList.add('ocultar');//add balanço
       this.ap.nativeElement.classList.add('ocultar');//criar balanço
       this.tabelaB.nativeElement.classList.remove('ocultar');//tabela do balanço
     }
   }
 
+  ngAfterViewInit(): void {
+      this.atualizarVisibilidade();
+  }
 
   getTotalAtivos(): number {
     return (
