@@ -28,7 +28,8 @@ import { MotorCalcComponent } from './Front/Ferramenta/motor-calc/motor-calc.com
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+
   ],
   providers: [],
   bootstrap: [AppComponent]

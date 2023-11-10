@@ -1,0 +1,72 @@
+<div>
+  <label for="tipoLancamento">Tipo de Lançamento:</label>
+  <select id="tipoLancamento" [(ngModel)]="tipoLancamento">
+    <option *ngFor="let tipo of tiposLancamento" [value]="tipo">{{ tipo }}</option>
+  </select>
+
+  <label for="conta">Conta:</label>
+  <select id="conta" [(ngModel)]="conta">
+    <option *ngFor="let conta of contas" [value]="conta">{{ conta }}</option>
+  </select>
+
+  <label for="valor">Valor:</label>
+  <input type="number" id="valor" [(ngModel)]="valor" placeholder="0.000.000,00">
+
+  <!-- Adicionando o campo numParcelas -->
+  <div *ngIf="tipoLancamento === 'Fornecedor' || tipoLancamento === 'Empréstimo'">
+    <label for="numParcelas">Número de Parcelas:</label>
+    <input type="number" id="numParcelas" [(ngModel)]="numParcelas">
+  </div>
+
+  <!--Contrapartida-->
+  <div>
+    <label for="tipoLancamentoContrapartida">Tipo de Lançamento:</label>
+    <select id="tipoLancamentoContrapartida" [(ngModel)]="tipoLancamentoContrapartida">
+      <option *ngFor="let tipo of tiposLancamento" [value]="tipo">{{ tipo }}</option>
+    </select>
+
+    <label for="contrapartidaConta">Conta:</label>
+    <select id="contrapartidaConta" [(ngModel)]="contrapartidaConta">
+      <option *ngFor="let conta of contas" [value]="conta">{{ conta }}</option>
+    </select>
+
+    <label for="contrapartidaValor">Valor:</label>
+    <input type="number" id="contrapartidaValor" [(ngModel)]="contrapartidaValor" placeholder="0.000.000,00">
+  </div>
+
+  <button (click)="adicionarLancamento()">Gravar Lançamento</button>
+  <button (click)="limparCampos()">Limpar Campos</button>
+
+  <!-- Botões para adicionar campos de débito e crédito -->
+  <button (click)="adicionarCampoDebito()">Adicionar Campo Débito</button>
+  <button (click)="adicionarCampoCredito()">Adicionar Campo Crédito</button>
+</div>
+
+<table>
+  <thead>
+    <tr>
+      <th>Nº Lançamento</th>
+      <th>Função</th>
+      <th>Tipo de Lançamento</th>
+      <th>Conta</th>
+      <th>Valor</th>
+      <th>Função</th>
+      <th>Tipo de Lançamento</th>
+      <th>Conta</th>
+      <th>Valor</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let lancamento of lancamentos; let i = index">
+      <td>{{ i + 1 }}</td>
+      <td>{{ lancamento.tipo }}</td>
+      <td>{{ lancamento.tipoLancamento }}</td>
+      <td>{{ lancamento.conta }}</td>
+      <td>{{ lancamento.valor | currency }}</td>
+      <td>{{ lancamento.contrapartida?.tipo }}</td>
+      <td>{{ lancamento.contrapartida?.tipoLancamento }}</td>
+      <td>{{ lancamento.contrapartida?.conta }}</td>
+      <td>{{ lancamento.contrapartida?.valor | currency }}</td>
+    </tr>
+  </tbody>
+</table>
