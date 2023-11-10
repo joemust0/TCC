@@ -42,6 +42,10 @@
 
     <label for="nCampoValor{{ i }}">Valor:</label>
     <input type="number" id="nCampoValor{{ i }}" [(ngModel)]="campo.valor" placeholder="0.000.000,00">
+
+    <label for="nCampoFuncao{{ i }}">Função:</label>
+    <input type="checkbox" id="nCampoFuncao{{ i }}" [(ngModel)]="campo.funcaoCredito">
+    <label for="nCampoFuncao{{ i }}">Crédito</label>
   </div>
 
   <button (click)="adicionarLancamento()">Gravar Lançamento</button>
@@ -58,23 +62,30 @@
       <th>Tipo de Lançamento</th>
       <th>Conta</th>
       <th>Valor</th>
-      <th>Função</th>
-      <th>Tipo de Lançamento</th>
-      <th>Conta</th>
-      <th>Valor</th>
     </tr>
   </thead>
   <tbody>
     <tr *ngFor="let lancamento of lancamentos; let i = index">
       <td>{{ i + 1 }}</td>
+      <div>
       <td>{{ lancamento.tipo }}</td>
       <td>{{ lancamento.tipoLancamento }}</td>
       <td>{{ lancamento.conta }}</td>
       <td>{{ lancamento.valor | currency }}</td>
+    </div>
+    <div>
       <td>{{ lancamento.contrapartida?.tipo }}</td>
       <td>{{ lancamento.contrapartida?.tipoLancamento }}</td>
       <td>{{ lancamento.contrapartida?.conta }}</td>
       <td>{{ lancamento.contrapartida?.valor | currency }}</td>
+    </div>
+    <ng-container *ngFor="let campo of lancamento.camposDinamicos; let j = index">
+      <div>
+      <td>{{ campo.funcaoCredito ? 'Crédito' : 'Débito' }}</td>
+        <td>{{ campo.tipo }}</td>
+        <td>{{ campo.conta }}</td>
+        <td>{{ campo.valor | currency }}</td>
+      </div>
+      </ng-container>
     </tr>
-  </tbody>
 </table>

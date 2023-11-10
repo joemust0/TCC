@@ -25,22 +25,33 @@ export class LancamentosComponent {
   // Adicionando a função para adicionar mais itens
   adicionarCampo() {
     const novoCampo = {
-      tipoLancamentoNCampo: '',
-      nCampoConta: '',
-      nCampoValor: 0
+      tipo: '',
+      conta: '',
+      valor: 0,
+      funcaoCredito: false
     };
 
-    this.camposDinamicos.push({ ...novoCampo }); // Criando uma cópia independente
+    this.camposDinamicos.push({ ...novoCampo });
   }
 
   adicionarLancamento() {
     // Lógica para validar contrapartida
-    if (this.valor !== this.contrapartidaValor) {
+       const totalCamposDinamicos = this.camposDinamicos.reduce((acc, campo) => {
+      if (campo.funcaoCredito) {
+        return acc + campo.valor;
+      } else {
+        return acc - campo.valor;
+      }
+    }, 0);
+
+    const margemErro = 0.01; // Defina a margem de erro que faz sentido para o seu caso
+
+    if (Math.abs(this.valor - (this.contrapartidaValor + totalCamposDinamicos)) > margemErro) {
       alert('A contrapartida deve ter o mesmo valor do lançamento.');
       return;
     }
 
-    // Lógica para adicionar os campos dinâmicos à lista de lançamentos
+    // Adicionando o novo lançamento à lista
     const novoLancamento = {
       tipo: 'Débito',  // Definindo sempre como débito
       conta: this.conta,
@@ -59,6 +70,28 @@ export class LancamentosComponent {
 
     // Limpar campos após adicionar
     this.limparCampos();
+
+    // Lógica para verificar a soma dos débitos e créditos
+    const totalDebitos = this.lancamentos.reduce((acc, lancamento) => {
+      if (lancamento.tipo === 'Débito') {
+        return acc + lancamento.valor;
+      } else {
+        return acc;
+      }
+    }, 0);
+
+    const totalCreditos = this.lancamentos.reduce((acc, lancamento) => {
+      if (lancamento.tipo === 'Crédito') {
+        return acc + lancamento.valor;
+      } else {
+        return acc;
+      }
+    }, 0);
+
+    // Verificar se a soma dos débitos é diferente da soma dos créditos
+    if (totalDebitos !== totalCreditos) {
+      alert('Existem diferenças nos valores de débito e crédito. Confira os valores lançados!');
+    }
   }
 
   limparCampos() {

@@ -12,6 +12,7 @@ import { TestesComponent } from './Dev/testes/testes.component';
 import { LancamentosComponent } from './Front/Ferramenta/lancamentos/lancamentos.component';
 import { BalancosComponent } from './Front/Ferramenta/balancos/balancos.component';
 import { MotorCalcComponent } from './Front/Ferramenta/motor-calc/motor-calc.component';
+import { InfoLancamentoComponent } from './Front/Ferramenta/info-lancamento/info-lancamento.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { MotorCalcComponent } from './Front/Ferramenta/motor-calc/motor-calc.com
     TestesComponent,
     LancamentosComponent,
     BalancosComponent,
-    MotorCalcComponent
+    MotorCalcComponent,
+    InfoLancamentoComponent
   ],
   imports: [
     BrowserModule,
