@@ -30,7 +30,7 @@ export class BalancosComponent {
     console.log("Descrição: " + this.descricao);
 
     // Envia os dados para a tela de lançamentos e navega para lá
-    this.router.navigate(['/lancamentos'], {
+    this.router.navigate(['/lançamentos'], {
       state: {
         nome: this.nome,
         descricao: this.descricao

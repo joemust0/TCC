@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-lancamentos',
@@ -21,19 +22,30 @@ export class LancamentosComponent implements OnInit {
   @Input() columnsToShow: string[] = [];
   @Input() lancamentos: any[] = [];
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private route: ActivatedRoute) {}
 
-  ngOnInit() {
-    // Verifica se há dados do balanço na navegação e os recupera
-    const navigation = this.router.getCurrentNavigation();
-    if (navigation && navigation.extras.state) {
-      this.nome = navigation.extras.state['nome'];
-      this.descricao = navigation.extras.state['descricao'];
-    }
+  ngOnInit(): void {
+    // Usando um evento para detectar alterações na rota
+    this.router.events
+      .pipe(filter(event => event instanceof NavigationEnd))
+      .subscribe(() => {
+        // Obtendo os dados do estado da rota
+        const navigationState = this.route.snapshot?.root.firstChild?.data['state'];
+
+        if (navigationState) {
+          this.nome = navigationState.nome;
+          this.descricao = navigationState.descricao;
+        }
+      });
   }
 
   gerarBalanco() {
     // Implemente a lógica para gerar o balanço aqui
+    this.redirectToHome();
+  }
+
+  redirectToHome() {
+    this.router.navigate(['/balanco']);
   }
 
   adicionarCampo() {
