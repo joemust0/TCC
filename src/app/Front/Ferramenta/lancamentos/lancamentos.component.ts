@@ -1,8 +1,6 @@
-import { Component, Input, OnInit,  ElementRef, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, EventEmitter, Output } from '@angular/core';
 import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
-import { EventEmitter, Output } from '@angular/core';
-
 
 @Component({
   selector: 'app-lancamentos',
@@ -106,3 +104,4 @@ export class LancamentosComponent implements OnInit {
     this.camposDinamicos = [];
   }
 }
+
