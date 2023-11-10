@@ -1,4 +1,5 @@
-import { Component, ElementRef, ViewChild, Input } from '@angular/core';
+import { Component, ElementRef, ViewChild, Input, Output, EventEmitter } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-balancos',
@@ -6,6 +7,7 @@ import { Component, ElementRef, ViewChild, Input } from '@angular/core';
   styleUrls: ['./balancos.component.css']
 })
 export class BalancosComponent {
+
   @Input() lancamentosAtivoCirculante: any[] = [];
   @Input() lancamentosAtivoNCirculante: any[] = [];
   @Input() lancamentosPassivoCirculante: any[] = [];
@@ -18,20 +20,37 @@ export class BalancosComponent {
 
   @ViewChild('btnNovo') oc!: ElementRef;
   @ViewChild('criarBalanco') ap!: ElementRef;
+  @ViewChild('tabelaB') tabelaB!: ElementRef;
 
-  constructor() {}
+  // Adicione o serviço de roteamento no construtor
+  constructor(private router: Router) {}
 
   newBalanco() {
     console.log("Nome: " + this.nome);
     console.log("Descrição: " + this.descricao);
+
+    // Envia os dados para a tela de lançamentos e navega para lá
+    this.router.navigate(['/lancamentos'], {
+      state: {
+        nome: this.nome,
+        descricao: this.descricao
+      }
+    });
   }
 
   nBalanco() {
+    this.oc.nativeElement.classList.add('ocultar');
+    this.ap.nativeElement.classList.remove('ocultar');
+  }
+
+  gerarBalanco() {
     if (this.oc && this.ap) {
-      this.oc.nativeElement.classList.add('ocultar');
-      this.ap.nativeElement.classList.remove('ocultar');
+      this.oc.nativeElement.classList.add('ocultar');//add balanço
+      this.ap.nativeElement.classList.add('ocultar');//criar balanço
+      this.tabelaB.nativeElement.classList.remove('ocultar');//tabela do balanço
     }
   }
+
 
   getTotalAtivos(): number {
     return (

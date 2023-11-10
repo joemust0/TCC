@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-testes',
@@ -6,10 +6,11 @@ import { Component } from '@angular/core';
   styleUrls: ['./testes.component.css']
 })
 export class TestesComponent {
-  lancamentos: any[] = [];
-  tipoLancamento: string = '';
+  @Input() lancamentos: any[] = [];
+  @Input() tipoLancamento: string = '';
 
   adicionarLancamento(novoLancamento: any) {
     this.lancamentos.push(novoLancamento);
   }
+
 }

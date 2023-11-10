@@ -8,4 +8,5 @@ import { Component, Input } from '@angular/core';
 export class InfoLancamentoComponent {
   @Input() lancamentos: any[] = [];
   @Input() columnsToShow: string[] = [];
+  @Input() tipoLancamento: string = '';
 }

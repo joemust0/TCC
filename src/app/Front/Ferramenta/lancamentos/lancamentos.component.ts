@@ -1,28 +1,41 @@
-import { Component } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-lancamentos',
   templateUrl: './lancamentos.component.html',
   styleUrls: ['./lancamentos.component.css']
 })
-export class LancamentosComponent {
+export class LancamentosComponent implements OnInit {
   tiposLancamento = ["Ativo", "Passivo", "Ativo não Circulante", "Passivo não Circulante", "Patrimônio Líquido"];
   contas = ["Caixa", "Banco", "Imobilizado", "Estoque", "Fornecedor", "Empréstimo", "Capital Social"];
-  lancamentos: any[] = [];
   tipoLancamento: string = '';
   conta: string = '';
   valor: number = 0;
-  numParcelas: number = 1;
-
-  // Adicionando as propriedades de contrapartida
+  nome: string = '';
+  descricao: string = '';
   tipoLancamentoContrapartida: string = '';
   contrapartidaConta: string = '';
   contrapartidaValor: number = 0;
-
-  // Modelo de dados para os campos dinâmicos
   camposDinamicos: any[] = [];
+  @Input() columnsToShow: string[] = [];
+  @Input() lancamentos: any[] = [];
 
-  // Adicionando a função para adicionar mais itens
+  constructor(private router: Router) {}
+
+  ngOnInit() {
+    // Verifica se há dados do balanço na navegação e os recupera
+    const navigation = this.router.getCurrentNavigation();
+    if (navigation && navigation.extras.state) {
+      this.nome = navigation.extras.state['nome'];
+      this.descricao = navigation.extras.state['descricao'];
+    }
+  }
+
+  gerarBalanco() {
+    // Implemente a lógica para gerar o balanço aqui
+  }
+
   adicionarCampo() {
     const novoCampo = {
       tipo: '',
@@ -35,61 +48,37 @@ export class LancamentosComponent {
   }
 
   adicionarLancamento() {
-    // Lógica para validar contrapartida
-       const totalCamposDinamicos = this.camposDinamicos.reduce((acc, campo) => {
-      if (campo.funcaoCredito) {
-        return acc + campo.valor;
-      } else {
-        return acc - campo.valor;
-      }
+    const totalCamposDinamicos = this.camposDinamicos.reduce((acc, campo) => {
+      return campo.funcaoCredito ? acc + campo.valor : acc - campo.valor;
     }, 0);
 
-    const margemErro = 0.01; // Defina a margem de erro que faz sentido para o seu caso
+    const margemErro = 0.01;
 
     if (Math.abs(this.valor - (this.contrapartidaValor + totalCamposDinamicos)) > margemErro) {
       alert('A contrapartida deve ter o mesmo valor do lançamento.');
       return;
     }
 
-    // Adicionando o novo lançamento à lista
     const novoLancamento = {
-      tipo: 'Débito',  // Definindo sempre como débito
+      tipo: 'Débito',
       conta: this.conta,
       valor: this.valor,
-      numParcelas: this.numParcelas,
+      tipoLancamento: this.tipoLancamento,
       contrapartida: {
-        tipo: 'Crédito',  // Definindo sempre como crédito
+        tipo: 'Crédito',
         conta: this.contrapartidaConta,
         valor: this.contrapartidaValor
       },
-      camposDinamicos: [...this.camposDinamicos]  // Adicionando campos dinâmicos
+      camposDinamicos: [...this.camposDinamicos]
     };
 
-    // Adicionando o novo lançamento à lista
     this.lancamentos.push({ ...novoLancamento });
-
-    // Limpar campos após adicionar
     this.limparCampos();
 
-    // Lógica para verificar a soma dos débitos e créditos
-    const totalDebitos = this.lancamentos.reduce((acc, lancamento) => {
-      if (lancamento.tipo === 'Débito') {
-        return acc + lancamento.valor;
-      } else {
-        return acc;
-      }
-    }, 0);
+    const totalDebitos = this.lancamentos.reduce((acc, lancamento) => lancamento.tipo === 'Débito' ? acc + lancamento.valor : acc, 0);
+    const totalCreditos = this.lancamentos.reduce((acc, lancamento) => lancamento.tipo === 'Crédito' ? acc + lancamento.valor : acc, 0);
 
-    const totalCreditos = this.lancamentos.reduce((acc, lancamento) => {
-      if (lancamento.tipo === 'Crédito') {
-        return acc + lancamento.valor;
-      } else {
-        return acc;
-      }
-    }, 0);
-
-    // Verificar se a soma dos débitos é diferente da soma dos créditos
-    if (totalDebitos !== totalCreditos) {
+    if (Math.abs(totalDebitos - totalCreditos) > margemErro) {
       alert('Existem diferenças nos valores de débito e crédito. Confira os valores lançados!');
     }
   }
@@ -98,14 +87,9 @@ export class LancamentosComponent {
     this.tipoLancamento = '';
     this.conta = '';
     this.valor = 0;
-    this.numParcelas = 1;
-
-    // Limpar campos de contrapartida
     this.tipoLancamentoContrapartida = '';
     this.contrapartidaConta = '';
     this.contrapartidaValor = 0;
-
-    // Limpar campos dinâmicos
     this.camposDinamicos = [];
   }
 }
