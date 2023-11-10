@@ -13,23 +13,24 @@ export class LancamentosComponent {
   conta: string = '';
   valor: number = 0;
   numParcelas: number = 1;
+
+  // Adicionando as propriedades de contrapartida
   tipoLancamentoContrapartida: string = '';
   contrapartidaConta: string = '';
   contrapartidaValor: number = 0;
 
-  adicionarCampo(tipo: string) {
+  // Modelo de dados para os campos dinâmicos
+  camposDinamicos: any[] = [];
+
+  // Adicionando a função para adicionar mais itens
+  adicionarCampo() {
     const novoCampo = {
-      tipo: tipo === 'Débito' ? 'Débito' : 'Crédito',
-      conta: '',
-      valor: 0,
-      numParcelas: 1
+      tipoLancamentoNCampo: '',
+      nCampoConta: '',
+      nCampoValor: 0
     };
 
-    if (tipo === 'Débito') {
-      this.lancamentos.push({ ...novoCampo, contrapartida: { tipo: 'Crédito', conta: '', valor: 0 } });
-    } else if (tipo === 'Crédito') {
-      this.lancamentos.push({ ...novoCampo, contrapartida: { tipo: 'Débito', conta: '', valor: 0 } });
-    }
+    this.camposDinamicos.push({ ...novoCampo }); // Criando uma cópia independente
   }
 
   adicionarLancamento() {
@@ -39,35 +40,25 @@ export class LancamentosComponent {
       return;
     }
 
+    // Lógica para adicionar os campos dinâmicos à lista de lançamentos
     const novoLancamento = {
       tipo: 'Débito',  // Definindo sempre como débito
       conta: this.conta,
       valor: this.valor,
       numParcelas: this.numParcelas,
-      // Adicionando contrapartida ao lançamento
       contrapartida: {
         tipo: 'Crédito',  // Definindo sempre como crédito
         conta: this.contrapartidaConta,
         valor: this.contrapartidaValor
-      }
+      },
+      camposDinamicos: [...this.camposDinamicos]  // Adicionando campos dinâmicos
     };
 
-    // Lógica de validação da soma de débito e crédito
-    const totalDebito = this.lancamentos
-      .filter(lanc => lanc.tipo === 'Débito')
-      .reduce((acc, curr) => acc + Number(curr.valor), 0);
+    // Adicionando o novo lançamento à lista
+    this.lancamentos.push({ ...novoLancamento });
 
-    const totalCredito = this.lancamentos
-      .filter(lanc => lanc.tipo === 'Crédito')
-      .reduce((acc, curr) => acc + Number(curr.valor), 0);
-
-    if (totalDebito !== totalCredito) {
-      alert('Existem diferenças nos valores de débito e crédito. Confira os valores lançados!');
-      return; // Não adiciona o lançamento se a soma estiver errada
-    }
-
-    this.lancamentos.push({ ...novoLancamento }); // Criando uma cópia independente
-    this.limparCampos(); // Limpar campos após adicionar
+    // Limpar campos após adicionar
+    this.limparCampos();
   }
 
   limparCampos() {
@@ -75,32 +66,13 @@ export class LancamentosComponent {
     this.conta = '';
     this.valor = 0;
     this.numParcelas = 1;
+
+    // Limpar campos de contrapartida
     this.tipoLancamentoContrapartida = '';
     this.contrapartidaConta = '';
     this.contrapartidaValor = 0;
+
+    // Limpar campos dinâmicos
+    this.camposDinamicos = [];
   }
-
-  adicionarCampoDebito() {
-    const novoCampoDebito = {
-      tipo: 'Débito',
-      conta: '',
-      valor: 0,
-      numParcelas: 1,
-      contrapartida: { tipo: 'Crédito', conta: '', valor: 0 }
-    };
-    this.lancamentos.push({ ...novoCampoDebito });
-  }
-
-  adicionarCampoCredito() {
-    const novoCampoCredito = {
-      tipo: 'Crédito',
-      conta: '',
-      valor: 0,
-      numParcelas: 1,
-      contrapartida: { tipo: 'Débito', conta: '', valor: 0 }
-    };
-    this.lancamentos.push({ ...novoCampoCredito });
-  }
-
-
 }
