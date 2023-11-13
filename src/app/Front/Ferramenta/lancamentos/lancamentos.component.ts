@@ -44,7 +44,7 @@ export class LancamentosComponent implements OnInit {
 
   gerarBalanco() {
     this.mostrarBalanco = true;
-    this.mostrarBalancoChange.emit(this.mostrarBalanco);
+
   }
 
   adicionarCampo() {
@@ -63,7 +63,7 @@ export class LancamentosComponent implements OnInit {
       return campo.funcaoCredito ? acc + campo.valor : acc - campo.valor;
     }, 0);
 
-    const margemErro = 0.01;
+    const margemErro = 0.0000001;
 
     if (Math.abs(this.valor - (this.contrapartidaValor + totalCamposDinamicos)) > margemErro) {
       alert('A contrapartida deve ter o mesmo valor do lançamento.');
@@ -78,7 +78,8 @@ export class LancamentosComponent implements OnInit {
       contrapartida: {
         tipo: 'Crédito',
         conta: this.contrapartidaConta,
-        valor: this.contrapartidaValor
+        valor: this.contrapartidaValor,
+        tipoLancamento: this .tipoLancamentoContrapartida,
       },
       camposDinamicos: [...this.camposDinamicos]
     };
@@ -89,9 +90,7 @@ export class LancamentosComponent implements OnInit {
     const totalDebitos = this.lancamentos.reduce((acc, lancamento) => lancamento.tipo === 'Débito' ? acc + lancamento.valor : acc, 0);
     const totalCreditos = this.lancamentos.reduce((acc, lancamento) => lancamento.tipo === 'Crédito' ? acc + lancamento.valor : acc, 0);
 
-    if (Math.abs(totalDebitos - totalCreditos) > margemErro) {
-      alert('Existem diferenças nos valores de débito e crédito. Confira os valores lançados!');
-    }
+
   }
 
   limparCampos() {
@@ -102,6 +101,10 @@ export class LancamentosComponent implements OnInit {
     this.contrapartidaConta = '';
     this.contrapartidaValor = 0;
     this.camposDinamicos = [];
+  }
+
+  limparLancamentos(){
+    this.lancamentos.pop();
   }
 }
 

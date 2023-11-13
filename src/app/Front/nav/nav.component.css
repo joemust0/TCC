@@ -1,13 +1,13 @@
 *{
   --color-hover: rgba(32, 59,232);
-  --transition: all 0.2s ease;
+  --transition: all 0.2s ease
 }
 .sidebar{
-position:absolute;
+position:fixed;
 top: 0;
 left: 0;
 z-index: 100;
-width: 78px;
+width: 100px;
 height: 100%;
 background-color:#fff;
 padding: 8px 16px;
@@ -48,17 +48,18 @@ transition: var(--transition);
 margin-right: 0;
 }
 .nav-routes{
-  margin: 20px;
+  margin: 13px;
   height: 100%;
 }
 .nav-routes li{
   position: relative;
-  margin: 8px 0;
+  margin: 9px 0;
   list-style: none;
 }
 .nav-routes li:hover{
   background-color: var(--color-hover);
-  border-radius: 12px;
+  width: 115%;
+  border-radius: 15px;
  }
 .nav-routes i{
   color: #000;
@@ -68,7 +69,6 @@ margin-right: 0;
   text-align: center;
   line-height: 50px;
 }
-
 .sidebar:not(.expand) .nav-routes li i {
   color: #000;
 }
@@ -77,7 +77,7 @@ margin-right: 0;
   font-weight: 400;
   color: navy;
   outline: none;
-  height: 40px;
+  height: 0px;
   width: 50%;
   border: none;
   border-radius: 12px;
@@ -96,7 +96,6 @@ margin-right: 0;
   align-items: center;
   text-decoration: none;
   background: #fff;
-  cursor: pointer;
 }
 .nav-routes li span .text{
 color: #000;
@@ -105,7 +104,6 @@ font-weight: 400;
 white-space: nowarp;
 display: none;
 transition: var(--transition);
-cursor: pointer;
 }
 .sidebar.expand .nav-routes li span .text{
   display: block;
@@ -115,15 +113,12 @@ cursor: pointer;
 .sidebar.ocultar .nav-routes li span.text {
   display: none;
 }
-
 .nav-routes li:hover .text{
   color: #e2e2e2;
 }
-
 .nav-routes li:hover i{
 color: #fff;
 }
-
 .nav-routes .busca-btn{
 position: absolute;
 top: 50%;
@@ -134,13 +129,11 @@ color: #000;
 border-radius: 12px;
 background: #fff;
 transition: var(--transition);
-
 }
 .sidebar.expand .nav-routes .busca-btn{
 background: transparent;
 transition: var(--transition);
 }
-
 .nav-routes .busca-btn:hover{
 background-color: var(--color-hover);
 }
@@ -154,14 +147,26 @@ width: 250px;
 left: 0;
 padding: 8px 16px;
 }
-.theme-wrapper .theme-icon{
+.theme-wrapper .theme-icon{/*tela de tema escuro, css da tela */
   font-size: 20px;
   color: #000;
+  display: none;
+  transition: var(--transition);
+  transition: background-color 0.5s ease;
+}
+.sidebar.expand .theme-wrapper .theme-icon{
+  display: block;
+
 }
 .theme-wrapper p{
   font-size: 16px;
   color: #000;
   font-weight: 400;
+  display: none;
+  transition: var(--transition);
+}
+.sidebar.expand .theme-wrapper p{
+  display: block;
 }
 .theme-wrapper .theme-btn{
 width: 40px;
@@ -179,5 +184,5 @@ height: 15px;
 border-radius: 50%;
 top: 2px;
 left: 3px;
+transition: var(--transition);
 }
-

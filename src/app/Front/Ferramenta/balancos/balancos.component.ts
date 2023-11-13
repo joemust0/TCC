@@ -19,32 +19,30 @@ export class BalancosComponent implements AfterViewInit {
   nome: string = '';
   descricao: string = '';
 
-  @ViewChild('btnNovo') oc!: ElementRef;
-  @ViewChild('criarBalanco') ap!: ElementRef;
-  @ViewChild('tabelaB') tabelaB!: ElementRef;
+  @ViewChild('btnNovo', { static: false }) oc!: ElementRef;
+  @ViewChild('criarBalanco', { static: false }) ap!: ElementRef;
+  @ViewChild('tabelaB', { static: false }) tabelaB!: ElementRef;
 
-  // Adicione o serviço de roteamento no construtor
-  constructor(private router: Router, private route:ActivatedRoute) {
+  mostrarBalanco: boolean = false;
+
+  constructor(private router: Router, private route: ActivatedRoute) {
     this.router.events
-    .pipe(filter(event => event instanceof NavigationEnd))
-    .subscribe(() => {
-      this.atualizarVisibilidade();
-    });
-}
+      .pipe(filter(event => event instanceof NavigationEnd))
+      .subscribe(() => {
+        this.atualizarVisibilidade();
+      });
+  }
 
-private atualizarVisibilidade() {
-  if (this.oc && this.ap && this.tabelaB) {
-    const urlAtual = this.router.url;
+  private atualizarVisibilidade() {
+    if (this.oc && this.ap && this.tabelaB) {
+      const urlAtual = this.router.url;
+      const mostrarTabela = urlAtual === '/balanço' && this.mostrarBalanco;
 
-    if (urlAtual === '/balanço') {
-      this.oc.nativeElement.classList.add('ocultar');
-      this.ap.nativeElement.classList.add('ocultar');
-      this.tabelaB.nativeElement.classList.remove('ocultar');
-    } else {
-
+      this.oc.nativeElement.classList.toggle('ocultar', mostrarTabela);
+      this.ap.nativeElement.classList.toggle('ocultar', mostrarTabela);
+      this.tabelaB.nativeElement.classList.toggle('ocultar', !mostrarTabela);
     }
   }
-}
 
   newBalanco() {
     console.log("Nome: " + this.nome);
@@ -60,20 +58,19 @@ private atualizarVisibilidade() {
   }
 
   nBalanco() {
-    this.oc.nativeElement.classList.add('ocultar');
-    this.ap.nativeElement.classList.remove('ocultar');
-  }
-
-  gerarBalanco() {
-    if (this.oc && this.ap && this.tabelaB) {
-      this.oc.nativeElement.classList.add('ocultar');//add balanço
-      this.ap.nativeElement.classList.add('ocultar');//criar balanço
-      this.tabelaB.nativeElement.classList.remove('ocultar');//tabela do balanço
+    if (this.oc && this.ap) {
+      this.oc.nativeElement.classList.add('ocultar');
+      this.ap.nativeElement.classList.remove('ocultar');
+      console.log("nBanalano aqui");
     }
   }
 
+  gerarBalanco() {
+    this.mostrarBalanco = true;
+  }
+
   ngAfterViewInit(): void {
-      this.atualizarVisibilidade();
+    this.atualizarVisibilidade();
   }
 
   getTotalAtivos(): number {
@@ -91,7 +88,6 @@ private atualizarVisibilidade() {
     );
   }
 
-  // Lógica para calcular o balanço patrimonial
   private getAtivoCirculante(): number {
     const debito = this.lancamentos
       .filter(lanc => lanc.tipo === 'Débito' && (lanc.conta === 'Caixa' || lanc.conta === 'Banco' || lanc.conta === 'Estoque'))
@@ -142,13 +138,14 @@ private atualizarVisibilidade() {
 
   private getPatrimonioLiquido(): number {
     const credito = this.lancamentos
-      .filter(lanc => lanc.tipo === 'Crédito' && lanc.conta === 'Capital Social')
-      .reduce((acc, curr) => acc + curr.valor, 0);
+      .filter(lanc => lanc.tipo === 'Crédito' && lanc.conta === 'Capital Social') || [];
 
     const debito = this.lancamentos
-      .filter(lanc => lanc.tipo === 'Débito' && lanc.conta === 'Capital Social')
-      .reduce((acc, curr) => acc + curr.valor, 0);
+      .filter(lanc => lanc.tipo === 'Débito' && lanc.conta === 'Capital Social') || [];
 
-    return credito - debito;
+    const creditoTotal = credito.reduce((acc, curr) => acc + (curr.valor || 0), 0);
+    const debitoTotal = debito.reduce((acc, curr) => acc + (curr.valor || 0), 0);
+
+    return creditoTotal - debitoTotal;
   }
 }

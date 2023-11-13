@@ -11,7 +11,7 @@ const routes: Routes = [
   {path: 'teste', component: TestesComponent},
   {path: 'lançamentos', component: LancamentosComponent},
   {path: 'balanços', component: BalancosComponent},
-  { path: '', redirectTo: '/balancos', pathMatch: 'full' },
+  { path: '', redirectTo: '/balanços', pathMatch: 'full' },
 ];
 
 @NgModule({
