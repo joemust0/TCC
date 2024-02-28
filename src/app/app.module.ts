@@ -13,8 +13,9 @@ import { LancamentosComponent } from './Front/Ferramenta/lancamentos/lancamentos
 import { BalancosComponent } from './Front/Ferramenta/balancos/balancos.component';
 import { MotorCalcComponent } from './Front/Ferramenta/motor-calc/motor-calc.component';
 import { InfoLancamentoComponent } from './Front/Ferramenta/info-lancamento/info-lancamento.component';
-import { LoginComponent } from './Front/login/login.component';
-import { CadUsuarioComponent } from './Front/cad-usuario/cad-usuario.component';
+import { LoginComponent } from './Usuario/login/login.component';
+import { CadUsuarioComponent } from './Usuario/cad-usuario/cad-usuario.component';
+import { AreaUserComponent } from './Usuario/area-user/area-user.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { CadUsuarioComponent } from './Front/cad-usuario/cad-usuario.component';
     MotorCalcComponent,
     InfoLancamentoComponent,
     LoginComponent,
-    CadUsuarioComponent
+    CadUsuarioComponent,
+    AreaUserComponent
   ],
   imports: [
     BrowserModule,

@@ -4,8 +4,9 @@ import { MainComponent } from './Front/main/main.component';
 import { TestesComponent } from './Dev/testes/testes.component';
 import { LancamentosComponent } from './Front/Ferramenta/lancamentos/lancamentos.component';
 import { BalancosComponent } from './Front/Ferramenta/balancos/balancos.component';
-import { LoginComponent } from './Front/login/login.component';
-import { CadUsuarioComponent } from './Front/cad-usuario/cad-usuario.component';
+import { LoginComponent } from './Usuario/login/login.component';
+import { CadUsuarioComponent } from './Usuario/cad-usuario/cad-usuario.component';
+import { AreaUserComponent } from './Usuario/area-user/area-user.component';
 
 
 const routes: Routes = [
@@ -16,6 +17,7 @@ const routes: Routes = [
   {path: '', redirectTo: '/balanços', pathMatch: 'full' },
   {path: 'login', component: LoginComponent},
   {path: 'cadUsuario', component: CadUsuarioComponent},
+  {path: 'areaUser', component: AreaUserComponent},
 ];
 
 @NgModule({
