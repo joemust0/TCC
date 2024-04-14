@@ -22,6 +22,7 @@ export class NavComponent implements OnInit {
 
   this.ocultar = !this.ocultar; //Alterar o estado do texto
   this.iconOcultar = !this.iconOcultar; //Alterar o estado do icone
+  changebtn();
 });
 }
 }
@@ -37,4 +38,3 @@ function changebtn() {
     }
   }
 }
-

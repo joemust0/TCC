@@ -1,0 +1,48 @@
+<p>form works!</p>
+<button id="AdicionarLancamentoInicial" onclick="adicionarLancamento()">Adicionar Lançamento</button>
+<table border="" id="Base">
+    <tr>
+        <td class="num-lancamento"></td>
+          <td id="Tipo-entrada">
+              <button class="DebCre" id="Crédito" onclick="toggleCheckBox('Crédito')"><label
+                      for="Crédito">Crédito</label></button>
+              <button class="DebCre" id="Débito" onclick="toggleCheckBox('Crédito')"><label
+                      for="Débito">Débito</label></button>
+              <input type="checkbox" id="hiddenCrédito" style="display: none">
+              <input type="checkbox" id="hiddenDébito" style="display: none">
+             </td>
+          <td id="Tipagem">
+              <label>Tipo de entrada</label><br>
+              <select id="Tipo-Entrada" (change)="atualizarTipoEntrada($event)" [(ngModel)]="tipoEntrada">
+                <option value="Ativo">Ativo</option>
+                <option value="Passivo">Passivo</option>
+                <option value="PatrL">Patrimonio Líquido</option>
+              </select>
+          </td>
+          <td id="Entrar">
+              <label for="entrada">Escolha sua entrada</label><br>
+              <select id="entrada" (change)="atualizarEntrada($event)" [(ngModel)]="entrada">
+                   <option id="entrada"></option>
+                  <option value="Caixa">Caixa</option>
+                  <option value="Banco">Banco</option>
+                  <option value="Imobilizado">Imobilizado</option>
+                  <option value="Estoque">Estoque</option>
+                  <option value="Fornecedor">Fornecedor</option>
+                  <option value="Emprestimo">Emprestimo</option>
+                  <option value="Capital-Social">Capital Social</option>
+              </select>
+          </td>
+          <td id="Valores">
+              <label for="Valor">Digite seu valor</label><br>
+              <input type="number" id="Valor" min="0" placeholder="0.00">
+          </td>
+      </tr>
+      <tr *ngFor="let entrada of sharedTableService.obterTabelaOriginal()">
+        <!-- Renderize as colunas da tabela original -->
+      </tr>
+</table>
+<table border="" id="Nova">
+</table>
+<button class="Adic" id="Adicionar">Adicionar</button>
+<button class="Graf" id="Grafico"  (click)="acompanharL()" routerLink="/Graf-balanço">Acompanhar</button>
+<script type="module" src="src\app\Front\ferramenta\form\form.component.tss"></script>

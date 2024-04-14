@@ -22,4 +22,5 @@ export class CadUsuarioComponent implements OnInit {
       return this.router.navigate(['/']);
       }
 
+
 }

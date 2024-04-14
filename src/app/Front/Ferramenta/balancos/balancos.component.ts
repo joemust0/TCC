@@ -1,151 +1,80 @@
-import { Component, ElementRef, ViewChild, Input, AfterViewInit } from '@angular/core';
-import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
-import { filter } from 'rxjs/operators';
+import { Component, Input, OnInit } from '@angular/core';
+import { BalancoSheet } from './balancoSheet';
+import { BalancoSheetService } from 'src/app/Servicos/balanco-sheet.service';
 
 @Component({
   selector: 'app-balancos',
   templateUrl: './balancos.component.html',
   styleUrls: ['./balancos.component.css']
 })
-export class BalancosComponent implements AfterViewInit {
+export class BalancosComponent implements OnInit{
+  balancoSheet!: BalancoSheet;
 
-  @Input() lancamentosAtivoCirculante: any[] = [];
-  @Input() lancamentosAtivoNCirculante: any[] = [];
-  @Input() lancamentosPassivoCirculante: any[] = [];
-  @Input() lancamentosPassivoNCirculante: any[] = [];
-  @Input() lancamentosPatrimonioLiquido: any[] = [];
-  @Input() lancamentos: any[] = [];
+    @Input() lancamentosAtivoCirculante: any[] = [];
+    @Input() lancamentosAtivoNCirculante: any[] = [];
+    @Input() lancamentosPassivoCirculante: any[] = [];
+    @Input() lancamentosPassivoNCirculante: any[] = [];
+    @Input() lancamentosPatrimonioLiquido: any[] = [];
+    @Input() lancamentos: any[] = [];
 
-  nome: string = '';
-  descricao: string = '';
+    constructor(private balancoSheetService: BalancoSheetService){}
 
-  @ViewChild('btnNovo', { static: false }) oc!: ElementRef;
-  @ViewChild('criarBalanco', { static: false }) ap!: ElementRef;
-  @ViewChild('tabelaB', { static: false }) tabelaB!: ElementRef;
-
-  mostrarBalanco: boolean = false;
-
-  constructor(private router: Router, private route: ActivatedRoute) {
-    this.router.events
-      .pipe(filter(event => event instanceof NavigationEnd))
-      .subscribe(() => {
-        this.atualizarVisibilidade();
-      });
+  ngOnInit(): void {
+    this.balancoSheet = this.balancoSheetService.obterBalancoSheet();
   }
-
-  private atualizarVisibilidade() {
-    if (this.oc && this.ap && this.tabelaB) {
-      const urlAtual = this.router.url;
-      const mostrarTabela = urlAtual === '/balanço' && this.mostrarBalanco;
-
-      this.oc.nativeElement.classList.toggle('ocultar', mostrarTabela);
-      this.ap.nativeElement.classList.toggle('ocultar', mostrarTabela);
-      this.tabelaB.nativeElement.classList.toggle('ocultar', !mostrarTabela);
+    getTotalAtivoCirculante(): number {
+      return this.balancoSheet.ativosCirculantes
+        .filter(a => a.nome === 'ativoCirculante')
+        .reduce((total, ativo) => total + ativo.valor, 0);
     }
-  }
 
-  newBalanco() {
-    console.log("Nome: " + this.nome);
-    console.log("Descrição: " + this.descricao);
-
-    // Envia os dados para a tela de lançamentos e navega para lá
-    this.router.navigate(['/lançamentos'], {
-      state: {
-        nome: this.nome,
-        descricao: this.descricao
-      }
-    });
-  }
-
-  nBalanco() {
-    if (this.oc && this.ap) {
-      this.oc.nativeElement.classList.add('ocultar');
-      this.ap.nativeElement.classList.remove('ocultar');
-      console.log("nBanalano aqui");
+    getTotalAtivoNaoCirculante(): number {
+      return this.balancoSheet.ativosNaoCirculantes
+        .filter(a => a.nome === 'ativoNaoCirculante')
+        .reduce((total, ativo) => total + ativo.valor, 0);
     }
-  }
 
-  gerarBalanco() {
-    this.mostrarBalanco = true;
-  }
+    getTotalPassivoCirculante(): number {
+      return this.balancoSheet.passivosCirculantes
+        .filter(p => p.nome === 'passivoCirculante')
+        .reduce((total, passivo) => total + passivo.valor, 0);
+    }
 
-  ngAfterViewInit(): void {
-    this.atualizarVisibilidade();
-  }
+    getTotalPassivoNaoCirculante(): number {
+      return this.balancoSheet.passivosNaoCirculantes
+        .filter(p => p.nome === 'passivoNaoCirculante')
+        .reduce((total, passivo) => total + passivo.valor, 0);
+    }
 
-  getTotalAtivos(): number {
-    return (
-      this.getAtivoCirculante() +
-      this.getAtivoNCirculante()
-    );
-  }
+    getTotalPatrimonioLiquido(): number {
+      return this.balancoSheet.patrimonio
+        .filter(p => p.nome === 'patrimonioLiquido')
+        .reduce((total, patrimonio) => total + patrimonio.valor, 0);
+    }
 
-  getTotalPassivos(): number {
-    return (
-      this.getPassivoCirculante() +
-      this.getPassivoNCirculante() +
-      this.getPatrimonioLiquido()
-    );
-  }
+    getTotalAtivos(): number {
+      return (
+        this.getTotalAtivoCirculante() +
+        this.getTotalAtivoNaoCirculante()
+      );
+    }
 
-  private getAtivoCirculante(): number {
-    const debito = this.lancamentos
-      .filter(lanc => lanc.tipo === 'Débito' && (lanc.conta === 'Caixa' || lanc.conta === 'Banco' || lanc.conta === 'Estoque'))
-      .reduce((acc, curr) => acc + curr.valor, 0);
+    getTotalPassivos(): number {
+      return (
+        this.getTotalPassivoCirculante() +
+        this.getTotalPassivoNaoCirculante() +
+        this.getTotalPatrimonioLiquido()
+      );
+    }
 
-    const credito = this.lancamentos
-      .filter(lanc => lanc.tipo === 'Crédito' && (lanc.conta === 'Caixa' || lanc.conta === 'Banco' || lanc.conta === 'Estoque'))
-      .reduce((acc, curr) => acc + curr.valor, 0);
+    saveBalanco(){
+      return alert("Balanço Salvo");
+    }
 
-    return debito - credito;
-  }
+    imprimirBalanco(): void {
 
-  private getAtivoNCirculante(): number {
-    const debito = this.lancamentos
-      .filter(lanc => lanc.tipo === 'Débito' && (lanc.conta === 'Imobilizado' || lanc.conta === 'Estoque'))
-      .reduce((acc, curr) => acc + curr.valor, 0);
+        window.print();
+      };
+    }
 
-    const credito = this.lancamentos
-      .filter(lanc => lanc.tipo === 'Crédito' && (lanc.conta === 'Imobilizado' || lanc.conta === 'Estoque'))
-      .reduce((acc, curr) => acc + curr.valor, 0);
 
-    return debito - credito;
-  }
-
-  private getPassivoCirculante(): number {
-    const credito = this.lancamentos
-      .filter(lanc => lanc.tipo === 'Crédito' && (lanc.conta === 'Fornecedor' || lanc.conta === 'Empréstimo'))
-      .reduce((acc, curr) => acc + curr.valor, 0);
-
-    const debito = this.lancamentos
-      .filter(lanc => lanc.tipo === 'Débito' && (lanc.conta === 'Fornecedor' || lanc.conta === 'Empréstimo'))
-      .reduce((acc, curr) => acc + curr.valor, 0);
-
-    return credito - debito;
-  }
-
-  private getPassivoNCirculante(): number {
-    const credito = this.lancamentos
-      .filter(lanc => lanc.tipo === 'Crédito' && (lanc.conta === 'Fornecedor' || lanc.conta === 'Empréstimo'))
-      .reduce((acc, curr) => acc + curr.valor, 0);
-
-    const debito = this.lancamentos
-      .filter(lanc => lanc.tipo === 'Débito' && (lanc.conta === 'Fornecedor' || lanc.conta === 'Empréstimo'))
-      .reduce((acc, curr) => acc + curr.valor, 0);
-
-    return credito - debito;
-  }
-
-  private getPatrimonioLiquido(): number {
-    const credito = this.lancamentos
-      .filter(lanc => lanc.tipo === 'Crédito' && lanc.conta === 'Capital Social') || [];
-
-    const debito = this.lancamentos
-      .filter(lanc => lanc.tipo === 'Débito' && lanc.conta === 'Capital Social') || [];
-
-    const creditoTotal = credito.reduce((acc, curr) => acc + (curr.valor || 0), 0);
-    const debitoTotal = debito.reduce((acc, curr) => acc + (curr.valor || 0), 0);
-
-    return creditoTotal - debitoTotal;
-  }
-}

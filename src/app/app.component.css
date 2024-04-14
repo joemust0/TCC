@@ -2,7 +2,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-
+  font-family: 'Iceland';
 }
 .header{
   font-family: "iceland",sans-serif;
@@ -11,22 +11,27 @@
 font-family: "poppins",sans-serif;
 
 
+
 }
 .main{
     display: flex;
-    position: relative;
+    position: absolute;
     align-items: baseline;
     justify-content: baseline;
     margin-top: 50px;
     margin-left: 150px;
-    margin-bottom: 100px;
+    margin-bottom: 10px;
     padding-top: 5px;
+
 }
 .footer{
     display: block;
     position: fixed;
     background-color: rgb(5, 21, 51);
     width: 100%;
-    height: 50px;
+    height: 30px;
     bottom: 0px;
+    color: lightgreen;
+    text-align: center;
+
 }
