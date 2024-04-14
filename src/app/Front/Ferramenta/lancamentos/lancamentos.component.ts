@@ -19,6 +19,7 @@ export class LancamentosComponent implements OnInit {
   contrapartidaConta: string = '';
   contrapartidaValor: number = 0;
   camposDinamicos: any[] = [];
+  chaveAcesso: number = 0;
 
   @Input() columnsToShow: string[] = [];
   @Input() lancamentos: any[] = [];
@@ -89,7 +90,6 @@ export class LancamentosComponent implements OnInit {
 
     const totalDebitos = this.lancamentos.reduce((acc, lancamento) => lancamento.tipo === 'Débito' ? acc + lancamento.valor : acc, 0);
     const totalCreditos = this.lancamentos.reduce((acc, lancamento) => lancamento.tipo === 'Crédito' ? acc + lancamento.valor : acc, 0);
-
 
   }
 
