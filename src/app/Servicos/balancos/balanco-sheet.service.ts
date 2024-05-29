@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BalancoSheet } from '../Front/Ferramenta/balancos/balancoSheet';
+import { BalancoSheet } from '../../Front/Ferramenta/balancos/balancoSheet';
 
 
 @Injectable({

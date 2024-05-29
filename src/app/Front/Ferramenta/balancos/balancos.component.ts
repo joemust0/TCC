@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { BalancoSheet } from './balancoSheet';
-import { BalancoSheetService } from 'src/app/Servicos/balanco-sheet.service';
+import { BalancoSheetService } from 'src/app/Servicos/balancos/balanco-sheet.service';
 
 @Component({
   selector: 'app-balancos',

@@ -1,8 +1,9 @@
 export interface Usuario {
-  Nome: string;
-  Nickname?: string;
-  Email: string;
-  Password: string;
-  Resposavel?: string;
-  Instituicao?: string;
+  id: number;
+  nomo_completo: string;
+  nickname?: string;
+  email: string;
+  senha: string;
+  resposavel?: string;
+  instituicao?: string;
 }

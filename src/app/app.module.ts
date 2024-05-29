@@ -21,9 +21,11 @@ import { TaskComponent } from './Front/Ferramenta/task/task.component';
 import { FormComponent } from './Front/Ferramenta/form/form.component';
 import { ExibirBalancoComponent } from './Front/Ferramenta/exibir-balanco/exibir-balanco.component';
 import { SharedTableService } from './Dev/processos/shared-tab.service';
-import { BalancoSheetService } from './Servicos/balanco-sheet.service';
-import { UsuarioService } from './Servicos/usuario.service';
+import { BalancoSheetService } from './Servicos/balancos/balanco-sheet.service';
+import { UsuarioService } from './Servicos/usuarios/usuario.service';
 import { EdicaoUserComponent } from './Usuario/edicao-user/edicao-user.component';
+import { LancamentosService } from './Servicos/lancamentos/lancamentos.service';
+import { PlanoDeContasService } from './Servicos/planoDeContas/plano-de-contas.service';
 
 @NgModule({
   declarations: [
@@ -52,7 +54,7 @@ import { EdicaoUserComponent } from './Usuario/edicao-user/edicao-user.component
     HttpClientModule,
 
   ],
-  providers: [SharedTableService, BalancoSheetService, UsuarioService],
+  providers: [SharedTableService, BalancoSheetService, UsuarioService, LancamentosService, PlanoDeContasService],
   bootstrap: [AppComponent, FormComponent]
 })
 export class AppModule { }
