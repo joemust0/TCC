@@ -8,15 +8,15 @@
       </div>
       <div class="edit" ngForm="Cadastro">
           <label>Nome Completo:</label>
-          <input type="text" alt="Nome" id="Nome" [(ngModel)]="usuario.Nome" [readonly]="!editavel" />
+          <input type="text" alt="Nome" id="Nome" [(ngModel)]="usuario.nome_completo" [readonly]="!editavel" />
           <label>Apelido:</label>
-          <input type="text" alt="Apelido" id="Nickname" [(ngModel)]="usuario.Nickname" [readonly]="!editavel" />
+          <input type="text" alt="Apelido" id="Nickname" [(ngModel)]="usuario.nickname" [readonly]="!editavel" />
           <label>Digite seu e-mail:</label>
-          <input type="email" alt="E-mail" id="Email" [(ngModel)]="usuario.Email" [readonly]="!editavel" />
+          <input type="email" alt="E-mail" id="Email" [(ngModel)]="usuario.email" [readonly]="!editavel" />
           <label>Instituição:</label>
-          <input type="text" alt="Instituição" id="Instituicao" [(ngModel)]="usuario.Instituicao" />
+          <input type="text" alt="Instituição" id="Instituicao" [(ngModel)]="usuario.instituicao" />
           <label>Responsável:</label>
-          <input type="text" alt="Responsável" id="Responsavel" [(ngModel)]="usuario.Resposavel" />
+          <input type="text" alt="Responsável" id="Responsavel" [(ngModel)]="usuario.resposavel" />
 
       </div>
   </div>

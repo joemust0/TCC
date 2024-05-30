@@ -1,14 +1,14 @@
 <div class="areaUser"> <!--aplicar ng for e associar o bem vindo ao apelido ou nome da pessoa respectivamente-->
-  <h1>Bem vindo {{ usuario.Nome }}!</h1>
+  <h1>Bem vindo {{ usuario.nome_completo }}!</h1>
   <img src="/upload/wallpaperflare.com_wallpaper (2).jpg" alt="FotoPerfil" />
   <label>Usuário:</label>
-  <p id="Nome">{{ usuario.Nome }}</p>
+  <p id="Nome">{{ usuario.nome_completo }}</p>
   <label>Email:</label>
-  <p id="E-mail">{{ usuario.Email }}</p>
+  <p id="E-mail">{{ usuario.email }}</p>
   <label>Instituição:</label>
-  <p id="Instituição">{{ usuario.Instituicao }}</p>
+  <p id="Instituição">{{ usuario.instituicao }}</p>
   <label>Responsável:</label>
-  <p id="Responsável">{{ usuario.Resposavel }}</p>
+  <p id="Responsável">{{ usuario.resposavel }}</p>
 </div>
 <div class="btn-comandos-userArea">
   <button (click)="Edit()" Alt="Edição">Editar</button>

@@ -1,6 +1,6 @@
 export interface Usuario {
-  id: number;
-  nomo_completo: string;
+  id: (number|String);
+  nome_completo: string;
   nickname?: string;
   email: string;
   senha: string;

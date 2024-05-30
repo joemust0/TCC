@@ -8,6 +8,9 @@ import { filter } from 'rxjs/operators';
   styleUrls: ['./lancamentos.component.css']
 })
 export class LancamentosComponent implements OnInit {
+
+ // PContas: Array<any>;
+
   tiposLancamento = ["Ativo", "Passivo", "Ativo não Circulante", "Passivo não Circulante", "Patrimônio Líquido"];
   contas = ["Caixa", "Banco", "Imobilizado", "Estoque", "Fornecedor", "Empréstimo", "Capital Social"];
   tipoLancamento: string = '';
@@ -41,6 +44,10 @@ export class LancamentosComponent implements OnInit {
           this.descricao = navigationState.descricao;
         }
       });
+  }
+
+  ExibirPContas() {
+    
   }
 
   gerarBalanco() {

@@ -10,12 +10,13 @@ import { Usuario } from 'src/app/Usuario';
 export class UserEditComponent implements OnInit{
 
   usuario: Usuario = {
-    Nome: '',
-    Email: '',
-    Nickname: '',
-    Password: '',
-    Resposavel: '',
-    Instituicao: ''
+    id: '',
+    nome_completo: '',
+    nickname: '',
+    email: '',
+    senha: '',
+    resposavel: '',
+    instituicao: ''
   };
   editavel: boolean = false;
 
