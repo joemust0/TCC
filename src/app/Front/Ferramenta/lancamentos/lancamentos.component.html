@@ -24,6 +24,7 @@
   <div class="lanc-deb">
   <label for="tipoLancamento">Tipo de Lançamento Débito:</label>
   <select id="tipoLancamento" [(ngModel)]="tipoLancamento">
+    <option *ngFor="let tipo of tiposLancamento" [value]="tipo">{{ tipo }}</option>
     <!-- <option *ngFor="let pC of PContas" [value]="tipo">{{ tipo }}</option> -->
   </select>
   <br>
