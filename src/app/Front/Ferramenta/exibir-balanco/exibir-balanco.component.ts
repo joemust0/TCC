@@ -17,5 +17,8 @@ export class ExibirBalancoComponent implements OnInit {
   adicionarLancamento(novoLancamento: any) {
     this.lancamentos.push(novoLancamento);
   }
-}
 
+  handleMostrarBalancoChange(event: any) {
+    this.mostrarBalanco = event;
+  }
+}

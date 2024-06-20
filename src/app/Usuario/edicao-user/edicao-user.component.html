@@ -8,7 +8,7 @@
       </div>
       <div class="edit" ngForm="Cadastro">
           <label>Nome Completo:</label>
-          <input type="text" alt="Nome" id="Nome" [(ngModel)]="usuario.nome_completo" [readonly]="!editavel" />
+          <input type="text" alt="Nome" id="Nome" [(ngModel)]="usuario.nome" [readonly]="!editavel" />
           <label>Apelido:</label>
           <input type="text" alt="Apelido" id="Nickname" [(ngModel)]="usuario.nickname" [readonly]="!editavel" />
           <label>Digite seu e-mail:</label>
@@ -16,7 +16,7 @@
           <label>Instituição:</label>
           <input type="text" alt="Instituição" id="Instituicao" [(ngModel)]="usuario.instituicao" />
           <label>Responsável:</label>
-          <input type="text" alt="Responsável" id="Responsavel" [(ngModel)]="usuario.resposavel" />
+          <input type="text" alt="Responsável" id="Responsavel" [(ngModel)]="usuario.responsavel" />
 
       </div>
   </div>

@@ -1,6 +1,7 @@
-import { Component, Input, OnInit, EventEmitter, Output } from '@angular/core';
-import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
-import { filter } from 'rxjs/operators';
+import { Component, ElementRef, OnInit, ViewChild, QueryList, ViewChildren, Input } from '@angular/core';
+import { Observable } from 'rxjs';
+import { LancamentoDetalhe, PContas } from 'src/app/Lancamentos';
+import { PContasService } from 'src/app/Servicos/planoDeContas/plano-de-contas.service';
 
 @Component({
   selector: 'app-lancamentos',
@@ -8,110 +9,177 @@ import { filter } from 'rxjs/operators';
   styleUrls: ['./lancamentos.component.css']
 })
 export class LancamentosComponent implements OnInit {
-
- // PContas: Array<any>;
-
-  tiposLancamento = ["Ativo", "Passivo", "Ativo não Circulante", "Passivo não Circulante", "Patrimônio Líquido"];
-  contas = ["Caixa", "Banco", "Imobilizado", "Estoque", "Fornecedor", "Empréstimo", "Capital Social"];
-  tipoLancamento: string = '';
-  conta: string = '';
-  valor: number = 0;
-  nome: string = '';
-  descricao: string = '';
-  tipoLancamentoContrapartida: string = '';
-  contrapartidaConta: string = '';
-  contrapartidaValor: number = 0;
+  tipos: string[] = [];
+  periodo_cs: string[] = [];
+  modelos: string[] = [];
+  contas: string[] = [];
   camposDinamicos: any[] = [];
-  chaveAcesso: number = 0;
+  lancamentos: LancamentoDetalhe[] = [];
+  pContasList$!: Observable<PContas[]>;
+  uniqueTipos: string[] = [];
+  uniquePeriodos: string[] = [];
+  uniqueModelos: string[] = [];
+  uniqueContas: string[] = [];
 
-  @Input() columnsToShow: string[] = [];
-  @Input() lancamentos: any[] = [];
-  @Output() mostrarBalancoChange: EventEmitter<boolean> = new EventEmitter<boolean>();
+  tiposd: string = '';
+  periodo_csd: string = '';
+  modelosd: string = '';
+  contasd: string = '';
+  valord: number = 0;
+
+  tiposc: string = '';
+  periodo_csc: string = '';
+  modelosc: string = '';
+  contasc: string = '';
+  valorc: number = 0;
+
+  tiposn: string = '';
+  periodo_csn: string = '';
+  modelosn: string = '';
+  contasn: string = '';
+  valorn: number = 0;
+
+  num_nf!: string;
+  serie_nf!: string;
+  chave_nf!: string;
+  dataCriacao!: string;
+  dataEntrada!: string;
   mostrarBalanco: boolean = false;
+  balanco: any;
+  valor: any;
 
-  constructor(private router: Router, private route: ActivatedRoute) {}
+  @ViewChildren('apagarLinha') apagarLinha!: QueryList<ElementRef>;
+  @Input() columnsToShow: string[] = [];
+  @Input() lancamento: any[] = [];
 
-  ngOnInit(): void {
-    // Usando um evento para detectar alterações na rota
-    this.router.events
-      .pipe(filter(event => event instanceof NavigationEnd))
-      .subscribe(() => {
-        // Obtendo os dados do estado da rota
-        const navigationState = this.route.snapshot?.root.firstChild?.data['state'];
+  constructor(private pContasService: PContasService) {}
 
-        if (navigationState) {
-          this.nome = navigationState.nome;
-          this.descricao = navigationState.descricao;
-        }
-      });
+  ngOnInit() {
+    this.buscarPContas();
   }
 
-  ExibirPContas() {
-    
+  buscarPContas() {
+    this.pContasList$ = this.pContasService.buscarTodos();
+    this.pContasList$.subscribe(
+      data => {
+        console.log('Dados recebidos:', data);
+        this.uniqueTipos = [...new Set(data.map(pConta => pConta.tipo))];
+        this.uniquePeriodos = [...new Set(data.map(pConta => pConta.periodo_c))];
+        this.uniqueModelos = [...new Set(data.map(pConta => pConta.modelo))];
+        this.uniqueContas = [...new Set(data.map(pConta => pConta.conta))];
+      },
+      error => console.error('Erro ao buscar PContas:', error)
+    );
+  }
+
+  adicionarCampo() {
+    this.camposDinamicos.push({ tiposn: '', periodo_cn: '', modelosn: '', contasn: '', valorn: 0, funcaoCredito: false });
+  }
+
+  adicionarLancamento() {
+    // Calcula a soma dos débitos incluindo o campo de débito principal
+    const somaDebitos = this.valord + this.camposDinamicos
+      .filter(campo => !campo.funcaoCredito)
+      .reduce((acc, campo) => acc + campo.valorn, 0);
+
+    // Calcula a soma dos créditos incluindo o campo de crédito principal
+    const somaCreditos = this.valorc + this.camposDinamicos
+      .filter(campo => campo.funcaoCredito)
+      .reduce((acc, campo) => acc + campo.valorn, 0);
+
+    // Verifica se a soma dos débitos e créditos são iguais
+    if (somaDebitos !== somaCreditos) {
+      alert('A soma dos débitos deve ser igual à soma dos créditos.');
+      return;
+    }
+
+     // Cria um novo lançamento
+  const novoLancamento: LancamentoDetalhe = {
+    chave_nf: this.chave_nf,
+    num_nf: this.num_nf,
+    serie_nf: this.serie_nf,
+    data_criacao: this.dataCriacao,
+    data_entrada: this.dataEntrada,
+    debito: [
+      {
+        c_debito: this.contasd,
+        v_debito: this.valord
+      },
+      ...this.camposDinamicos
+        .filter(campo => !campo.funcaoCredito)
+        .map(campo => ({
+          c_debito: campo.contasn,
+          v_debito: campo.valorn
+        }))
+    ],
+    credito: [
+      {
+        c_credito: this.contasc,
+        v_credito: this.valorc
+      },
+      ...this.camposDinamicos
+        .filter(campo => campo.funcaoCredito)
+        .map(campo => ({
+          c_credito: campo.contasn,
+          v_credito: campo.valorn
+        }))
+    ],
+    camposDinamicos: [...this.camposDinamicos],
+    contrapartida: {
+      tipoCredito: this.tiposc,
+      periodo_cs: this.periodo_csc,
+      modelo: this.modelosc,
+      conta: this.contasc,
+      valor: this.valorc,
+    },
+    tipoCredito: this.tiposc,
+    tipos: this.tiposd,
+    periodo_cs: this.periodo_csd,
+    modelo: this.modelosd,
+    conta: this.contasd,
+    valor: this.valord,
+  };
+
+
+    // Adiciona o novo lançamento à lista de lançamentos
+    this.lancamentos.push(novoLancamento);
+
+    // Limpa os campos após adicionar o lançamento
+    this.limparCampos();
+  }
+
+  limparCampos() {
+    this.tiposd = '';
+    this.periodo_csd = '';
+    this.modelosd = '';
+    this.contasd = '';
+    this.valord = 0;
+
+    this.tiposc = '';
+    this.periodo_csc = '';
+    this.modelosc = '';
+    this.contasc = '';
+    this.valorc = 0;
+
+    this.chave_nf = '';
+    this.num_nf = '';
+    this.serie_nf = '';
+    this.dataCriacao = '';
+    this.dataEntrada = '';
+
+    this.camposDinamicos = [];
+  }
+
+  apagarLancamentos() {
+    const apagarIndices = this.apagarLinha.toArray().map((element, index) => element.nativeElement.checked ? index : -1).filter(index => index !== -1);
+    this.lancamentos = this.lancamentos.filter((_, index) => !apagarIndices.includes(index));
+  }
+
+  limparLancamentos() {
+    this.lancamentos = [];
   }
 
   gerarBalanco() {
     this.mostrarBalanco = true;
-
-  }
-
-  adicionarCampo() {
-    const novoCampo = {
-      tipo: '',
-      conta: '',
-      valor: 0,
-      funcaoCredito: false
-    };
-
-    this.camposDinamicos.push({ ...novoCampo });
-  }
-
-  adicionarLancamento() {
-    const totalCamposDinamicos = this.camposDinamicos.reduce((acc, campo) => {
-      return campo.funcaoCredito ? acc + campo.valor : acc - campo.valor;
-    }, 0);
-
-    const margemErro = 0.0000001;
-
-    if (Math.abs(this.valor - (this.contrapartidaValor + totalCamposDinamicos)) > margemErro) {
-      alert('A contrapartida deve ter o mesmo valor do lançamento.');
-      return;
-    }
-
-    const novoLancamento = {
-      tipo: 'Débito',
-      conta: this.conta,
-      valor: this.valor,
-      tipoLancamento: this.tipoLancamento,
-      contrapartida: {
-        tipo: 'Crédito',
-        conta: this.contrapartidaConta,
-        valor: this.contrapartidaValor,
-        tipoLancamento: this .tipoLancamentoContrapartida,
-      },
-      camposDinamicos: [...this.camposDinamicos]
-    };
-
-    this.lancamentos.push({ ...novoLancamento });
-    this.limparCampos();
-
-    const totalDebitos = this.lancamentos.reduce((acc, lancamento) => lancamento.tipo === 'Débito' ? acc + lancamento.valor : acc, 0);
-    const totalCreditos = this.lancamentos.reduce((acc, lancamento) => lancamento.tipo === 'Crédito' ? acc + lancamento.valor : acc, 0);
-
-  }
-
-  limparCampos() {
-    this.tipoLancamento = '';
-    this.conta = '';
-    this.valor = 0;
-    this.tipoLancamentoContrapartida = '';
-    this.contrapartidaConta = '';
-    this.contrapartidaValor = 0;
-    this.camposDinamicos = [];
-  }
-
-  limparLancamentos(){
-    this.lancamentos.pop();
   }
 }
-

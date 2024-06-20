@@ -1,6 +1,6 @@
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -11,7 +11,6 @@ import { FooterComponent } from './Front/footer/footer.component';
 import { MainComponent } from './Front/main/main.component';
 import { LancamentosComponent } from './Front/Ferramenta/lancamentos/lancamentos.component';
 import { BalancosComponent } from './Front/Ferramenta/balancos/balancos.component';
-import { MotorCalcComponent } from './Dev/motor-calc/motor-calc.component';
 import { InfoLancamentoComponent } from './Front/Ferramenta/info-lancamento/info-lancamento.component';
 import { LoginComponent } from './Usuario/login/login.component';
 import { CadUsuarioComponent } from './Usuario/cad-usuario/cad-usuario.component';
@@ -25,7 +24,9 @@ import { BalancoSheetService } from './Servicos/balancos/balanco-sheet.service';
 import { UsuarioService } from './Servicos/usuarios/usuario.service';
 import { EdicaoUserComponent } from './Usuario/edicao-user/edicao-user.component';
 import { LancamentosService } from './Servicos/lancamentos/lancamentos.service';
-import { PlanoDeContasService } from './Servicos/planoDeContas/plano-de-contas.service';
+import { PContasService } from './Servicos/planoDeContas/plano-de-contas.service';
+import { LancamentosTesteComponent } from './Front/Ferramenta/teste/lancamentos-teste/lancamentos-teste.component';
+
 
 @NgModule({
   declarations: [
@@ -36,7 +37,6 @@ import { PlanoDeContasService } from './Servicos/planoDeContas/plano-de-contas.s
     MainComponent,
     LancamentosComponent,
     BalancosComponent,
-    MotorCalcComponent,
     InfoLancamentoComponent,
     LoginComponent,
     CadUsuarioComponent,
@@ -45,16 +45,17 @@ import { PlanoDeContasService } from './Servicos/planoDeContas/plano-de-contas.s
     TaskComponent,
     FormComponent,
     ExibirBalancoComponent,
-    EdicaoUserComponent
+    EdicaoUserComponent,
+    LancamentosTesteComponent
   ],
-  imports: [
+  imports:[
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-
+    ReactiveFormsModule
   ],
-  providers: [SharedTableService, BalancoSheetService, UsuarioService, LancamentosService, PlanoDeContasService],
+  providers: [SharedTableService, BalancoSheetService, UsuarioService, LancamentosService, PContasService],
   bootstrap: [AppComponent, FormComponent]
 })
 export class AppModule { }

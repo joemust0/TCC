@@ -1,15 +1,48 @@
+export interface PContas {
+  id?: number;
+  tipo: string;
+  periodo_c: string;
+  modelo: string;
+  conta: string;
+}
+
 export interface Lancamento {
-id: number;
-num_balanco: number;
-num_nf: number;
-serie_nf: number;
-chave_nf: number;
-data_criacao: Date;
-data_entrada: Date;
-c_debito: (String | null);
-v_debito: (number | null);
-c_credito: (String | null);
-v_credito: (number | null);
-id_plano_de_contas: number;
-conta_analitica: String;
+  id_plano_de_contas?: number;
+  conta_analitica?: string;
+  c_debito?: string;
+  v_debito?: number;
+  c_credito?: string;
+  v_credito?: number;
+  tipo?: string;
+  periodo_c?: string;
+  titulo?: string;
+  conta?: string;
+}
+
+export interface LancamentoDetalhe {
+tipos: any;
+tipoCredito: any;
+camposDinamicos: any;
+periodo_cs: any;
+modelo: any;
+conta: any;
+valor: string|number;
+contrapartida: any;
+  chave_nf: string;
+  num_nf: string;
+  serie_nf: string;
+  data_criacao: string;
+  data_entrada: string;
+  debito: {
+    c_debito: string;
+    v_debito: number;
+    id_plano_de_contas?: number;
+    conta_analitica?: string;
+  }[];
+  credito: {
+    c_credito: string;
+    v_credito: number;
+    id_plano_de_contas?: number;
+    conta_analitica?: string;
+  }[];
 }

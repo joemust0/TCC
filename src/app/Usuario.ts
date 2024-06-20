@@ -1,9 +1,9 @@
 export interface Usuario {
-  id: (number|String);
-  nome_completo: string;
+  id: (number | null);
+  nome: string;
   nickname?: string;
   email: string;
   senha: string;
-  resposavel?: string;
   instituicao?: string;
+  responsavel?: string;
 }

@@ -6,9 +6,9 @@ import { BalancosComponent } from './Front/Ferramenta/balancos/balancos.componen
 import { LoginComponent } from './Usuario/login/login.component';
 import { CadUsuarioComponent } from './Usuario/cad-usuario/cad-usuario.component';
 import { AreaUserComponent } from './Usuario/area-user/area-user.component';
-import { MotorCalcComponent } from './Dev/motor-calc/motor-calc.component';
 import { TaskComponent } from './Front/Ferramenta/task/task.component';
 import { EdicaoUserComponent } from './Usuario/edicao-user/edicao-user.component';
+import { LancamentosTesteComponent } from './Front/Ferramenta/teste/lancamentos-teste/lancamentos-teste.component';
 
 
 const routes: Routes = [
@@ -16,11 +16,11 @@ const routes: Routes = [
   {path: 'lançamentos', component: LancamentosComponent},
   {path: 'balancos', component: BalancosComponent},
   {path: 'login', component: LoginComponent},
-  {path: 'calc', component: MotorCalcComponent},
   {path: 'cadUsuario', component: CadUsuarioComponent},
   {path: 'areaUser', component: AreaUserComponent},
   {path: 'editUser', component: EdicaoUserComponent },
   {path: 'task', component: TaskComponent },
+  {path: 'teste', component: LancamentosTesteComponent},
   {path: '', redirectTo: '/balancos', pathMatch: 'full' },
 ];
 

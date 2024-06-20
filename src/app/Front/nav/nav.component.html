@@ -1,5 +1,8 @@
 <nav>
   <section class="sidebar" [ngClass]="{'ocultar' : ocultar}">
+  <div class="logo">
+    <!-- <img [ngClass]="{'ocultar': ocultar}" src="./../../../assets/logo contilab.jpeg" alt="logo ContLab"> -->
+  </div>
   <div class="nav-header">
     <p class="logo">ContLab</p>
     <i class="bx bx-menu-alt-right btn-menu"></i>
@@ -33,16 +36,9 @@
         <i class='bx bx-user'></i>
         <span class="text" [ngClass]="{'hidden-text': ocultar}">Area teste</span>
       </li>
-      <li class="routes" routerLink="/calc">
-        <i class='bx bx-cog' ></i>
-        <span class="text" [ngClass]="{'hidden-text': ocultar}">Calculadora</span>
+      <li class="routes" routerLink="/teste">
+        <i class='bx bx-user'></i>
+        <span class="text" [ngClass]="{'hidden-text': ocultar}">teste</span>
       </li>
     </ul>
-    <div class="theme-wrapper">
-      <i class='bx bxs-moon theme-icon'></i>
-      <p>Tema escuro</p>
-      <div class="theme-btn">
-        <span class="theme-ball"></span>
-      </div>
-    </div>
-  </section>
+</section>

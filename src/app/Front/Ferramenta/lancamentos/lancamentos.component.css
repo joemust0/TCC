@@ -23,7 +23,7 @@ table{
   padding: 5px;
   border-radius: 12px;
   background-color: rgba(176, 212, 121, 0.651);
-  margin-bottom: 50px;
+  margin-bottom: 150px;
 }
 
 tbody{
@@ -93,7 +93,7 @@ input{
   box-shadow: 2px -4px darkgreen;
   background-color: rgba(52, 116, 211, 0.473);
   border-radius: 20px;
-  
+
 }
 
 .lancamento-header {
