@@ -11,6 +11,7 @@ import { EdicaoUserComponent } from './Usuario/edicao-user/edicao-user.component
 import { LancamentosTesteComponent } from './Front/Ferramenta/teste/lancamentos-teste/lancamentos-teste.component';
 
 
+
 const routes: Routes = [
   {path: '', component: MainComponent},
   {path: 'lançamentos', component: LancamentosComponent},

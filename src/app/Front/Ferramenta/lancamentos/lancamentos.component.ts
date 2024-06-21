@@ -160,43 +160,41 @@ export class LancamentosComponent implements OnInit {
       this.lancamentos = [];
     }
 
-  gerarBalanco() {
-    const lancamentosAtivoCirculante = this.lancamentos.filter(lancamento => lancamento.tipos === 'ativo' && lancamento.periodo_cs === 'circulante');
-    const lancamentosAtivoNCirculante = this.lancamentos.filter(lancamento => lancamento.tipos === 'ativo' && (lancamento.periodo_cs === 'REALIZÁVEL A LONGO PRAZO' || lancamento.periodo_cs === 'PERMANENTE'));
-    const lancamentosPassivoCirculante = this.lancamentos.filter(lancamento => lancamento.tipos === 'passivo' && lancamento.periodo_cs === 'circulante');
-    const lancamentosPassivoNCirculante = this.lancamentos.filter(lancamento => lancamento.tipos === 'passivo' && (lancamento.periodo_cs === 'PASSIVO EXIGÍVEL A LONGO PRAZO' || lancamento.periodo_cs === 'RESULT. DE EXERCÍCIOS FUTUROS' || lancamento.periodo_cs === 'PATRIMÔNIO LÍQUIDO'));
-    const lancamentosPatrimonioLiquido = this.lancamentos.filter(lancamento => lancamento.tipos === 'resultado' && lancamento.periodo_cs === 'RESULTADO OPERACIONAL');
+    gerarBalanco() {
+      const lancamentosAtivoCirculante = this.lancamentos.filter(lancamento => lancamento.tipos === 'ativo' && lancamento.periodo_cs === 'circulante');
+      const lancamentosAtivoNCirculante = this.lancamentos.filter(lancamento => lancamento.tipos === 'ativo' && (lancamento.periodo_cs === 'REALIZÁVEL A LONGO PRAZO' || lancamento.periodo_cs === 'PERMANENTE'));
+      const lancamentosPassivoCirculante = this.lancamentos.filter(lancamento => lancamento.tipos === 'passivo' && lancamento.periodo_cs === 'circulante');
+      const lancamentosPassivoNCirculante = this.lancamentos.filter(lancamento => lancamento.tipos === 'passivo' && (lancamento.periodo_cs === 'PASSIVO EXIGÍVEL A LONGO PRAZO' || lancamento.periodo_cs === 'RESULT. DE EXERCÍCIOS FUTUROS' || lancamento.periodo_cs === 'PATRIMÔNIO LÍQUIDO'));
+      const lancamentosPatrimonioLiquido = this.lancamentos.filter(lancamento => lancamento.tipos === 'resultado' && lancamento.periodo_cs === 'RESULTADO OPERACIONAL');
 
-    const totalAtivos = lancamentosAtivoCirculante.reduce((acc, lancamento) => acc + parseFloat(lancamento.valor as string), 0) +
-    lancamentosAtivoNCirculante.reduce((acc, lancamento) => acc + parseFloat(lancamento.valor as string), 0);
+      const totalAtivos = lancamentosAtivoCirculante.reduce((acc, lancamento) => acc + parseFloat(lancamento.valor as string), 0) +
+        lancamentosAtivoNCirculante.reduce((acc, lancamento) => acc + parseFloat(lancamento.valor as string), 0);
 
-const totalPassivos = lancamentosPassivoCirculante.reduce((acc, lancamento) => acc + parseFloat(lancamento.valor as string), 0) +
-      lancamentosPassivoNCirculante.reduce((acc, lancamento) => acc + parseFloat(lancamento.valor as string), 0) +
-      lancamentosPatrimonioLiquido.reduce((acc, lancamento) => acc + parseFloat(lancamento.valor as string), 0);
+      const totalPassivos = lancamentosPassivoCirculante.reduce((acc, lancamento) => acc + parseFloat(lancamento.valor as string), 0) +
+        lancamentosPassivoNCirculante.reduce((acc, lancamento) => acc + parseFloat(lancamento.valor as string), 0) +
+        lancamentosPatrimonioLiquido.reduce((acc, lancamento) => acc + parseFloat(lancamento.valor as string), 0);
 
+      if (totalAtivos !== totalPassivos) {
+        alert("Balanço com diferença nas contas");
+        return;
+      }
 
-    if (totalAtivos !== totalPassivos) {
-      alert("Balanço com diferença nas contas");
-      return;
+      const balancoData = {
+        lancamentosAtivoCirculante,
+        lancamentosAtivoNCirculante,
+        lancamentosPassivoCirculante,
+        lancamentosPassivoNCirculante,
+        lancamentosPatrimonioLiquido,
+        totalAtivos,
+        totalPassivos
+      };
+
+      this.lancamentosService.adicionarBalanco(balancoData).subscribe(response => {
+        console.log("Balanço gerado com sucesso", response);
+        this.router.navigate(['/app-balancos'], { state: { balancoData: response } });
+      }, error => {
+        console.error("Erro ao gerar balanço", error);
+      });
     }
-
-    const balancoData = {
-      lancamentosAtivoCirculante,
-      lancamentosAtivoNCirculante,
-      lancamentosPassivoCirculante,
-      lancamentosPassivoNCirculante,
-      lancamentosPatrimonioLiquido,
-      totalAtivos,
-      totalPassivos
-    };
-
-    this.lancamentosService.adicionarBalanco(balancoData).subscribe(response => {
-      console.log("Balanço gerado com sucesso", response);
-      this.router.navigate(['/app-balancos'], { state: { balancoData: response } });
-    }, error => {
-      console.error("Erro ao gerar balanço", error);
-    });
   }
 
-
-}

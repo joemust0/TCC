@@ -59,6 +59,13 @@ export class UsuarioService {
       catchError(this.handleError)
     );
   }
+  login(email: string, senha: string): Observable<Usuario> {
+    return this.http.post<{ result: Usuario }>(`${this.baseURL}/login`, { email, senha }).pipe(
+      map(response => response.result),
+      tap(data => console.log('Usuário logado:', data)),
+      catchError(this.handleError)
+    );
+  }
 
   private handleError(error: any): Observable<never> {
     console.error('Ocorreu um erro:', error);

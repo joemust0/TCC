@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { BalancoSheet } from './balancoSheet';
+
+interface Lancamento {
+  nome: string;
+  total: number;
+}
 
 @Component({
   selector: 'app-balancos',
@@ -8,46 +11,46 @@ import { BalancoSheet } from './balancoSheet';
   styleUrls: ['./balancos.component.css']
 })
 export class BalancosComponent implements OnInit {
-  balancoSheet!: BalancoSheet;
-  lancamentosAtivoCirculante: any[] = [];
-  lancamentosAtivoNCirculante: any[] = [];
-  lancamentosPassivoCirculante: any[] = [];
-  lancamentosPassivoNCirculante: any[] = [];
-  lancamentosPatrimonioLiquido: any[] = [];
+  lancamentosAtivoCirculante: Lancamento[] = [];
+  lancamentosAtivoNCirculante: Lancamento[] = [];
+  lancamentosPassivoCirculante: Lancamento[] = [];
+  lancamentosPassivoNCirculante: Lancamento[] = [];
+  lancamentosPatrimonioLiquido: Lancamento[] = [];
 
-  constructor(private router: Router) {
-    const navigation = this.router.getCurrentNavigation();
-    if (navigation && navigation.extras.state) {
-      const state = navigation.extras.state as { balancoData: any };
-      this.balancoSheet = state.balancoData;
-      this.lancamentosAtivoCirculante = this.balancoSheet.lancamentosAtivoCirculante;
-      this.lancamentosAtivoNCirculante = this.balancoSheet.lancamentosAtivoNCirculante;
-      this.lancamentosPassivoCirculante = this.balancoSheet.lancamentosPassivoCirculante;
-      this.lancamentosPassivoNCirculante = this.balancoSheet.lancamentosPassivoNCirculante;
-      this.lancamentosPatrimonioLiquido = this.balancoSheet.lancamentosPatrimonioLiquido;
-    }
+  constructor() { }
+
+  ngOnInit(): void {
+    // Inicialize seus lançamentos aqui
   }
 
-  ngOnInit(): void {}
+  agruparLancamentos(lancamentos: Lancamento[]): { [key: string]: number } {
+    return lancamentos.reduce((acc: { [key: string]: number }, lancamento: Lancamento) => {
+      if (!acc[lancamento.nome]) {
+        acc[lancamento.nome] = 0;
+      }
+      acc[lancamento.nome] += lancamento.total;
+      return acc;
+    }, {});
+  }
 
   getTotalAtivoCirculante(): number {
-    return this.lancamentosAtivoCirculante.reduce((total, ativo) => total + ativo.valor, 0);
+    return this.lancamentosAtivoCirculante.reduce((acc, lancamento) => acc + lancamento.total, 0);
   }
 
   getTotalAtivoNaoCirculante(): number {
-    return this.lancamentosAtivoNCirculante.reduce((total, ativo) => total + ativo.valor, 0);
+    return this.lancamentosAtivoNCirculante.reduce((acc, lancamento) => acc + lancamento.total, 0);
   }
 
   getTotalPassivoCirculante(): number {
-    return this.lancamentosPassivoCirculante.reduce((total, passivo) => total + passivo.valor, 0);
+    return this.lancamentosPassivoCirculante.reduce((acc, lancamento) => acc + lancamento.total, 0);
   }
 
   getTotalPassivoNaoCirculante(): number {
-    return this.lancamentosPassivoNCirculante.reduce((total, passivo) => total + passivo.valor, 0);
+    return this.lancamentosPassivoNCirculante.reduce((acc, lancamento) => acc + lancamento.total, 0);
   }
 
   getTotalPatrimonioLiquido(): number {
-    return this.lancamentosPatrimonioLiquido.reduce((total, patrimonio) => total + patrimonio.valor, 0);
+    return this.lancamentosPatrimonioLiquido.reduce((acc, lancamento) => acc + lancamento.total, 0);
   }
 
   getTotalAtivos(): number {
@@ -56,5 +59,9 @@ export class BalancosComponent implements OnInit {
 
   getTotalPassivos(): number {
     return this.getTotalPassivoCirculante() + this.getTotalPassivoNaoCirculante() + this.getTotalPatrimonioLiquido();
+  }
+
+  getObjectKeys(obj: any): string[] {
+    return Object.keys(obj);
   }
 }

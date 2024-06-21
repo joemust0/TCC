@@ -28,11 +28,14 @@ transition: var(--transition);
   position: relative;
 }
 .nav-header .logo{
-color: #000;
-font-size: 23px;
+  color: rgb(117, 236, 181);
+  background-color: #011d3a;
+font-size: 3.0em;
 font-weight: 600;
 opacity: 0;
 transition: var(--transition);
+padding: 10px;
+border-radius: 15px;
 }
 .sidebar.expand .nav-header .logo{
   opacity: 1;

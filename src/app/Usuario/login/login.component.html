@@ -1,13 +1,16 @@
 <div class="login">
   <h2>Faça seu login</h2>
-  <div class="login-container">
+  <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
+    <div class="login-container">
       <h4>E-mail:</h4>
-      <input type="email" alt="E-mail" placeholder="Digite seu E-mail" required/>
+      <input type="email" [(ngModel)]="email" name="email" alt="E-mail" placeholder="Digite seu E-mail" required/>
       <h4>Senha</h4>
-      <input type="password" alt="senha" placeholder="Digite sua senha" required />
-  </div>
-  <div class="login-btn">
+      <input type="password" [(ngModel)]="senha" name="senha" alt="senha" placeholder="Digite sua senha" required />
+    </div>
+    <div class="login-btn">
       <button type="submit" alt="Logar">Logar</button>
-      <button (click)="CadUsuario()" alt="Criar Cadastro">Criar Cadastro</button>
-  </div>
+      <button type="button" (click)="CadUsuario()" alt="Criar Cadastro">Criar Cadastro</button>
+    </div>
+  </form>
+  <p *ngIf="mensagemErro" class="erro">{{ mensagemErro }}</p>
 </div>

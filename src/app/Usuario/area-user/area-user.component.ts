@@ -9,7 +9,12 @@ import { Usuario } from 'src/app/Usuario';
   styleUrls: ['./area-user.component.css']
 })
 export class AreaUserComponent implements OnInit{
-  usuario!:Usuario;
+  usuario = {
+    nome: 'João da Silva',
+    email: 'joao.silva@email.com',
+    instituicao: 'Empresa XYZ',
+    responsavel: 'João da Silva'
+  };
 
   constructor(private router:Router, private usuarioService: UsuarioService){}
 
@@ -17,8 +22,12 @@ export class AreaUserComponent implements OnInit{
     // this.usuario = this.usuarioService.getUsuarioLogado();
   }
 
-  Edit(){
+  edit(){
 
     return this.router.navigate(['/editUser']);
+  }
+
+  sair(){
+
   }
 }
