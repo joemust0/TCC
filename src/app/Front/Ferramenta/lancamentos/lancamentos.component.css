@@ -24,7 +24,7 @@ table{
   border: 2px double green;
   position: center;
   border-radius: 12px;
-  background-color: rgba(176, 212, 121, 0.651);
+  background-color: rgba(3, 168, 53, 0.651);
 }
 
 tbody{
@@ -98,9 +98,11 @@ input{
   border: none;
   box-sizing: border-box;
   box-shadow: 2px -4px darkgreen;
-  background-color: rgba(52, 116, 211, 0.473);
-  border-radius: 20px;
-
+  background-color: #011d3a;
+  border-radius: 15px;
+  color: rgb(117, 236, 181);
+  padding: 5px;
+  padding-left: 10px;
 }
 
 .lancamento-header {
@@ -116,7 +118,7 @@ input{
   text-align: center;
   border: 1px solid black;
   min-width: 100px;
-  background-color: lightblue;
+  background-color: #011d3a;
   min-height: 30px;
   max-height: 50px;
 
