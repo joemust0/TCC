@@ -20,19 +20,20 @@ export interface Lancamento {
 }
 
 export interface LancamentoDetalhe {
-tipos: any;
-tipoCredito: any;
-camposDinamicos: any;
-periodo_cs: any;
-modelo: any;
-conta: any;
-valor: string|number;
-contrapartida: any;
+  tipos: any;
+  tipoCredito: any;
+  camposDinamicos: any;
+  periodo_cs: any;
+  modelo: any;
+  conta: any;
+  valor: string | number;
+  contrapartida: any;
   chave_nf: string;
   num_nf: string;
   serie_nf: string;
   data_criacao: string;
   data_entrada: string;
+  periodoCredito: any;  // Adicione esta linha
   debito: {
     c_debito: string;
     v_debito: number;

@@ -93,60 +93,27 @@ export class LancamentosComponent implements OnInit {
       return;
     }
 
-     // Cria um novo lançamento
-  const novoLancamento: LancamentoDetalhe = {
-    chave_nf: this.chave_nf,
-    num_nf: this.num_nf,
-    serie_nf: this.serie_nf,
-    data_criacao: this.dataCriacao,
-    data_entrada: this.dataEntrada,
-    debito: [
-      {
-        c_debito: this.contasd,
-        v_debito: this.valord
-      },
-      ...this.camposDinamicos
-        .filter(campo => !campo.funcaoCredito)
-        .map(campo => ({
-          c_debito: campo.contasn,
-          v_debito: campo.valorn
-        }))
-    ],
-    credito: [
-      {
-        c_credito: this.contasc,
-        v_credito: this.valorc
-      },
-      ...this.camposDinamicos
-        .filter(campo => campo.funcaoCredito)
-        .map(campo => ({
-          c_credito: campo.contasn,
-          v_credito: campo.valorn
-        }))
-    ],
-    camposDinamicos: [...this.camposDinamicos],
-    contrapartida: {
-      tipoCredito: this.tiposc,
-      periodo_cs: this.periodo_csc,
-      modelo: this.modelosc,
-      conta: this.contasc,
-      valor: this.valorc,
-    },
-    tipoCredito: this.tiposc,
-    tipos: this.tiposd,
-    periodo_cs: this.periodo_csd,
-    modelo: this.modelosd,
-    conta: this.contasd,
-    valor: this.valord,
-  };
-
-
-    // Adiciona o novo lançamento à lista de lançamentos
+    const novoLancamento: LancamentoDetalhe = {
+      tipos: this.tiposd,
+      periodo_cs: this.periodo_csd,
+      modelo: this.modelosd,
+      conta: this.contasd,
+      valor: this.valord,
+      contrapartida: this.tiposc,
+      chave_nf: '',
+      num_nf: '',
+      serie_nf: '',
+      data_criacao: '',
+      data_entrada: '',
+      periodoCredito: this.periodo_csc,
+      debito: [{ c_debito: this.contasd, v_debito: this.valord }],
+      credito: [{ c_credito: this.contasc, v_credito: this.valorc }],
+      camposDinamicos: this.camposDinamicos,
+      tipoCredito: this.tiposc
+    };
     this.lancamentos.push(novoLancamento);
-
-    // Limpa os campos após adicionar o lançamento
     this.limparCampos();
-  }
+    }
 
   limparCampos() {
     this.tiposd = '';

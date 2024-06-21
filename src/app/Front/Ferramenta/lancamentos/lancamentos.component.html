@@ -1,6 +1,7 @@
 <div class="quadroLancamentos">
+  <!-- Quadro de Débito -->
   <div class="lanc-deb">
-    <h1>Lançamentos</h1>
+    <h1>Lançamento Débito</h1>
 
     <label for="tipoDebito">Tipo de Lançamento Débito:</label>
     <select id="tipoDebito" [(ngModel)]="tiposd">
@@ -21,7 +22,7 @@
     <br>
 
     <label for="contaDebito">Conta:</label>
-    <select id="conta" [(ngModel)]="contasd">
+    <select id="contaDebito" [(ngModel)]="contasd">
       <option *ngFor="let conta of uniqueContas" [value]="conta">{{ conta }}</option>
     </select>
     <br>
@@ -31,7 +32,10 @@
   </div>
   <hr>
 
+  <!-- Quadro de Crédito -->
   <div class="lanc-cred">
+    <h1>Lançamento Crédito</h1>
+
     <label for="tipoCredito">Tipo de Lançamento Crédito:</label>
     <select id="tipoCredito" [(ngModel)]="tiposc">
       <option *ngFor="let tipo of uniqueTipos" [value]="tipo">{{ tipo }}</option>
@@ -61,35 +65,43 @@
   </div>
   <hr>
 
-  <div class="lanc-novo" *ngFor="let campo of camposDinamicos; let i = index">
+  <!-- Quadro de Campos Adicionais -->
+  <div *ngFor="let campo of camposDinamicos; let i = index" class="lanc-novo">
+    <h1>Campo Adicional {{ i + 1 }}</h1>
+
     <label for="tipoNCampo{{ i }}">Tipo:</label>
     <select id="tipoNCampo{{ i }}" [(ngModel)]="campo.tiposn">
       <option *ngFor="let tipo of uniqueTipos" [value]="tipo">{{ tipo }}</option>
     </select>
     <br>
+
     <label for="perNCampo{{ i }}">Periodo Contábil:</label>
     <select id="perNCampo{{ i }}" [(ngModel)]="campo.periodo_csn">
       <option *ngFor="let periodo of uniquePeriodos" [value]="periodo">{{ periodo }}</option>
     </select>
     <br>
+
     <label for="modeloNCampo{{ i }}">Modelo:</label>
     <select id="modeloNCampo{{ i }}" [(ngModel)]="campo.modelosn">
       <option *ngFor="let modelo of uniqueModelos" [value]="modelo">{{ modelo }}</option>
     </select>
     <br>
+
     <label for="contaNCampo{{ i }}">Conta:</label>
     <select id="contaNCampo{{ i }}" [(ngModel)]="campo.contasn">
       <option *ngFor="let conta of uniqueContas" [value]="conta">{{ conta }}</option>
     </select>
     <br>
+
     <label for="valorNCampo{{ i }}">Valor:</label>
     <input type="number" id="valorNCampo{{ i }}" [(ngModel)]="campo.valorn" placeholder="0.000.000,00">
-
+    
     <label for="funcNCampo{{ i }}">Função:</label>
     <input class="checkCredito" type="checkbox" id="funcNCampo{{ i }}" [(ngModel)]="campo.funcaoCredito">
 
     <label for="funcNCampo{{ i }}">Crédito</label>
   </div>
+  
   <button (click)="adicionarCampo()">Adicionar Campo</button>
 
   <button (click)="adicionarLancamento()">Gravar Lançamento</button>

@@ -1,37 +1,71 @@
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
-
-*{
-    font-size: 18pt;
-}
-.btn{
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+   
+  /* Estilos para a tela de cadastro */
+  .cadastro {
+    width: 80%; /* Utilizando largura em porcentagem para ajustar à largura da tela */
+    max-width: 600px; /* Limitando a largura máxima para melhor legibilidade */
+    padding: 15px;
+    background-color: rgb(128, 128, 128);
+    border-radius: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    /* Centralizando vertical e horizontalmente */
+    position: fixed;
+    top: 47%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+   
+  .cad-container {
+    margin-bottom: 10px;
+  }
+   
+  .cad-container input {
+    width: 100%;
+    padding: 5px;
+    margin-top: 3px;
+    margin-bottom: 7px;
+    border: 1px solid rgb(90, 235, 168);
     border-radius: 5px;
-    margin: 10px;
-    display: flex;
-    align-items: center;
-
-}
-.btn-cad{
-    background-color:  #202020;
-    color: #039900;
-    border-radius: 20px;
-    font-size: 14px;
+  }
+   
+  .btn {
+    text-align: center;
+    margin-top: 10px; /* Espaço acima dos botões para melhor legibilidade */
+  }
+   
+  .btn button {
     padding: 10px 20px;
+    margin: 5px;
+    border: none;
+    border-radius: 5px;
     cursor: pointer;
-    font-weight: bold;
-    width: 110px;
-    align-self: center;
-    border-width: 1px;
-}
-.btn-can{
-    background-color:  #202020;
-    color: #f10707;
-    border-radius: 20px;
-    font-size: 14px;
-    padding: 10px 20px;
-    cursor: pointer;
-    font-weight: bold;
-    width: 110px;
-    align-self: center;
-    border-width: 1px;
-
-}
+  }
+   
+  .btn-cad {
+    background-color: #4caf50;
+    color: white;
+  }
+   
+  .btn-can {
+    background-color: #f44336;
+    color: white;
+  }
+   
+  /* Media query para telas menores que 768px (tablets e smartphones) */
+  @media (max-width: 768px) {
+    .cadastro {
+      width: 90%; /* Aumentando a largura para ocupar mais espaço disponível */
+      padding: 15px; /* Reduzindo um pouco o espaçamento interno */
+    }
+   
+    .btn button {
+      padding: 8px 16px; /* Reduzindo um pouco o padding dos botões */
+      font-size: 14px; /* Reduzindo o tamanho da fonte nos botões para melhorar a legibilidade */
+    }
+  }
+   
