@@ -1,5 +1,115 @@
-*{
-  font-size: 24pt;
+/* styles.css */
+.container {
+  background:rgba(32,33,61);
+  padding: 30px 0;
+  border:rgba(90,235,168);
+  box-shadow: 2px -4px rgba(90,235,168);
+  box-sizing: border-box;
+  border-radius: 20px;
+  width: 1250px;
+  height: 500px;
+}
+.span{
+  color: rgb(142, 5, 142);
+}
+.letrah1{
+  color: white;
+  margin: 0 auto;
+  width: 1120px;
+  margin: 0 auto;
+  align-items: center[];
+  color: #fff;
+  margin-top: -150px;
+
+}
+.letra{
+  color: white;
+  margin: 0 auto;
+  width: 1120px;
+  margin: 0 auto;
+  align-items: center[];
+  color: #fff;
+  margin-top: -0px;
+
 
 }
 
+header {
+  width: 1120px;
+  margin: 0 auto;
+  padding: 0 20px 150px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #fff;
+}
+
+header span {
+  font-size: 1.75rem;
+  font-weight: medium;
+}
+
+header nav a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 16px;
+  transition: opacity 0.2s;
+  padding-bottom: 6px;
+  border-bottom: 2px solid #FF872C;
+}
+
+header nav a + a {
+  margin-left: 32px;
+  margin-right: 5px;
+}
+
+header nav a:hover {
+  opacity: 0.6;
+}
+
+.table-container {
+  margin-top: 64px;
+}
+
+.table-container table {
+  width: 100%;
+  border-spacing: 0 8px;
+}
+
+.table-container th {
+  color: #969cb3;
+  font-weight: normal;
+  padding: 20px 32px;
+  text-align: left;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.table-container td {
+  padding: 20px 32px;
+  border: 0;
+  background: #fff;
+  font-size: 16px;
+  font-weight: normal;
+  color: #969cb3;
+}
+
+.table-container td.title {
+  color: #363f5f;
+}
+
+.table-container td.income {
+  color: #12a454;
+}
+
+.table-container td.outcome {
+  color: #e83f5b;
+}
+
+.table-container td:first-child {
+  border-radius: 8px 0 0 8px;
+}
+
+.table-container td:last-child {
+  border-radius: 0 8px 8px 0;
+}
