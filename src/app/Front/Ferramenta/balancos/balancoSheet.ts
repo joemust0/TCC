@@ -4,7 +4,13 @@ export class BalancoSheet {
   passivosCirculantes: Passivo[] = [];
   passivosNaoCirculantes: PassivoNaoCirculante[] = [];
   patrimonio: Patrimonio[] = [];
-}
+  lancamentosAtivoCirculante: any[] = [];
+  lancamentosAtivoNCirculante: any[] = [];
+  lancamentosPassivoCirculante: any[] = [];
+  lancamentosPassivoNCirculante: any[] = [];
+  lancamentosPatrimonioLiquido: any[] = [];
+  };
+
 
 export class Ativo {
   nome!: string;

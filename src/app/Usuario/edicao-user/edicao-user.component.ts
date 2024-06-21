@@ -9,22 +9,25 @@ import { Usuario } from 'src/app/Usuario';
   styleUrls: ['./edicao-user.component.css']
 })
 export class EdicaoUserComponent implements OnInit {
+alterarCampo() {
+throw new Error('Method not implemented.');
+}
   usuario!: Usuario;
   editavel: boolean = false;
 
   constructor(private usuarioService: UsuarioService) {}
 
   ngOnInit(): void {
-    this.usuario = this.usuarioService.getUsuario();
-  }
+  //   this.usuario = this.usuarioService.getUsuarioLogado();
+  // }
 
-  alterarCampo() {
-    if (this.editavel) {
-      this.usuarioService.atualizarUsuario(this.usuario);
-      this.editavel = false;
-    } else {
-      this.editavel = true;
-    }
+  // alterarCampo() {
+  //   if (this.editavel) {
+  //     this.usuarioService.atualizarUsuario(this.usuario);
+  //     this.editavel = false;
+  //   } else {
+  //     this.editavel = true;
+  //   }
   }
 
   ocultarCampo(){

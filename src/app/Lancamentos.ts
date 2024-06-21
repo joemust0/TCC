@@ -20,6 +20,7 @@ export interface Lancamento {
 }
 
 export interface LancamentoDetalhe {
+  selecionado: boolean;
   tipos: any;
   tipoCredito: any;
   camposDinamicos: any;

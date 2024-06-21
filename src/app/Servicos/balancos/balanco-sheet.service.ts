@@ -12,12 +12,17 @@ export class BalancoSheetService {
       // Chame a API do backend para buscar os dados do balanco sheet
       // Quando receber os dados, defina-os no `balancoSheet`
       this.balancoSheet = {
-          passivosCirculantes: [],
-          passivosNaoCirculantes: [],
-          ativosCirculantes: [],
-          ativosNaoCirculantes: [],
-          patrimonio: []
-        };
+        ativosCirculantes: [],
+        ativosNaoCirculantes: [],
+        passivosCirculantes: [],
+        passivosNaoCirculantes: [],
+        patrimonio: [],
+        lancamentosAtivoCirculante: [],
+        lancamentosAtivoNCirculante: [],
+        lancamentosPassivoCirculante: [],
+        lancamentosPassivoNCirculante: [],
+        lancamentosPatrimonioLiquido: []
+      };
 
       return this.balancoSheet;
   }

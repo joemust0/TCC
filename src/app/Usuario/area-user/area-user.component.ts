@@ -14,7 +14,7 @@ export class AreaUserComponent implements OnInit{
   constructor(private router:Router, private usuarioService: UsuarioService){}
 
   ngOnInit(): void {
-    this.usuario = this.usuarioService.getUsuario();
+    // this.usuario = this.usuarioService.getUsuarioLogado();
   }
 
   Edit(){

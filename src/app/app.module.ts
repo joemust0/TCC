@@ -15,7 +15,6 @@ import { InfoLancamentoComponent } from './Front/Ferramenta/info-lancamento/info
 import { LoginComponent } from './Usuario/login/login.component';
 import { CadUsuarioComponent } from './Usuario/cad-usuario/cad-usuario.component';
 import { AreaUserComponent } from './Usuario/area-user/area-user.component';
-import { UserEditComponent } from './Usuario/user-edit/user-edit.component';
 import { TaskComponent } from './Front/Ferramenta/task/task.component';
 import { FormComponent } from './Front/Ferramenta/form/form.component';
 import { ExibirBalancoComponent } from './Front/Ferramenta/exibir-balanco/exibir-balanco.component';
@@ -41,7 +40,6 @@ import { LancamentosTesteComponent } from './Front/Ferramenta/teste/lancamentos-
     LoginComponent,
     CadUsuarioComponent,
     AreaUserComponent,
-    UserEditComponent,
     TaskComponent,
     FormComponent,
     ExibirBalancoComponent,
